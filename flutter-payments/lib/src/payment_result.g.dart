@@ -15,7 +15,7 @@ _$_PaymentResult _$_$_PaymentResultFromJson(Map<String, dynamic> json) {
     json['paymentMethodId'] as String?,
     json['paymentTypeId'] as String?,
     json['issuerId'] as String?,
-    json['installments'] as String?,
+    json['installments'] as int?,
     json['captured'] as bool?,
     json['liveMode'] as bool?,
     json['operationType'] as String?,

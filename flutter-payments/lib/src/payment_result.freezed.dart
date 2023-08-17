@@ -17,17 +17,17 @@ class _$PaymentResultTearOff {
 
   _PaymentResult call(String result,
       [int? id,
-        String? status,
-        String? statusDetail,
-        String? paymentMethodId,
-        String? paymentTypeId,
-        String? issuerId,
-        String? installments,
-        bool? captured,
-        bool? liveMode,
-        String? operationType,
-        String? transactionAmount,
-        String? errorMessage]) {
+      String? status,
+      String? statusDetail,
+      String? paymentMethodId,
+      String? paymentTypeId,
+      String? issuerId,
+      int? installments,
+      bool? captured,
+      bool? liveMode,
+      String? operationType,
+      String? transactionAmount,
+      String? errorMessage]) {
     return _PaymentResult(
       result,
       id,
@@ -57,7 +57,7 @@ mixin _$PaymentResult {
   String? get paymentMethodId;
   String? get paymentTypeId;
   String? get issuerId;
-  String? get installments;
+  int? get installments;
   bool? get captured;
   bool? get liveMode;
   String? get operationType;
@@ -70,22 +70,22 @@ mixin _$PaymentResult {
 
 abstract class $PaymentResultCopyWith<$Res> {
   factory $PaymentResultCopyWith(
-      PaymentResult value, $Res Function(PaymentResult) then) =
-  _$PaymentResultCopyWithImpl<$Res>;
+          PaymentResult value, $Res Function(PaymentResult) then) =
+      _$PaymentResultCopyWithImpl<$Res>;
   $Res call(
       {String result,
-        int? id,
-        String? status,
-        String? statusDetail,
-        String? paymentMethodId,
-        String? paymentTypeId,
-        String? issuerId,
-        String? installments,
-        bool? captured,
-        bool? liveMode,
-        String? operationType,
-        String? transactionAmount,
-        String? errorMessage});
+      int? id,
+      String? status,
+      String? statusDetail,
+      String? paymentMethodId,
+      String? paymentTypeId,
+      String? issuerId,
+      int? installments,
+      bool? captured,
+      bool? liveMode,
+      String? operationType,
+      String? transactionAmount,
+      String? errorMessage});
 }
 
 class _$PaymentResultCopyWithImpl<$Res>
@@ -126,9 +126,8 @@ class _$PaymentResultCopyWithImpl<$Res>
           ? _value.paymentTypeId
           : paymentTypeId as String?,
       issuerId: issuerId == freezed ? _value.issuerId : issuerId as String?,
-      installments: installments == freezed
-          ? _value.installments
-          : installments as String?,
+      installments:
+          installments == freezed ? _value.installments : installments as int?,
       captured: captured == freezed ? _value.captured : captured as bool?,
       liveMode: liveMode == freezed ? _value.liveMode : liveMode as bool?,
       operationType: operationType == freezed
@@ -147,23 +146,23 @@ class _$PaymentResultCopyWithImpl<$Res>
 abstract class _$PaymentResultCopyWith<$Res>
     implements $PaymentResultCopyWith<$Res> {
   factory _$PaymentResultCopyWith(
-      _PaymentResult value, $Res Function(_PaymentResult) then) =
-  __$PaymentResultCopyWithImpl<$Res>;
+          _PaymentResult value, $Res Function(_PaymentResult) then) =
+      __$PaymentResultCopyWithImpl<$Res>;
   @override
   $Res call(
       {String? result,
-        int? id,
-        String? status,
-        String? statusDetail,
-        String? paymentMethodId,
-        String? paymentTypeId,
-        String? issuerId,
-        String? installments,
-        bool? captured,
-        bool? liveMode,
-        String? operationType,
-        String? transactionAmount,
-        String? errorMessage});
+      int? id,
+      String? status,
+      String? statusDetail,
+      String? paymentMethodId,
+      String? paymentTypeId,
+      String? issuerId,
+      int? installments,
+      bool? captured,
+      bool? liveMode,
+      String? operationType,
+      String? transactionAmount,
+      String? errorMessage});
 }
 
 class __$PaymentResultCopyWithImpl<$Res>
@@ -200,12 +199,16 @@ class __$PaymentResultCopyWithImpl<$Res>
       paymentMethodId == freezed
           ? _value.paymentMethodId
           : paymentMethodId as String?,
-      paymentTypeId == freezed ? _value.paymentTypeId : paymentTypeId as String?,
+      paymentTypeId == freezed
+          ? _value.paymentTypeId
+          : paymentTypeId as String?,
       issuerId == freezed ? _value.issuerId : issuerId as String?,
-      installments == freezed ? _value.installments : installments as String?,
+      installments == freezed ? _value.installments : installments as int?,
       captured == freezed ? _value.captured : captured as bool?,
       liveMode == freezed ? _value.liveMode : liveMode as bool?,
-      operationType == freezed ? _value.operationType : operationType as String?,
+      operationType == freezed
+          ? _value.operationType
+          : operationType as String?,
       transactionAmount == freezed
           ? _value.transactionAmount
           : transactionAmount as String?,
@@ -218,17 +221,17 @@ class __$PaymentResultCopyWithImpl<$Res>
 class _$_PaymentResult implements _PaymentResult {
   const _$_PaymentResult(this.result,
       [this.id,
-        this.status,
-        this.statusDetail,
-        this.paymentMethodId,
-        this.paymentTypeId,
-        this.issuerId,
-        this.installments,
-        this.captured,
-        this.liveMode,
-        this.operationType,
-        this.transactionAmount,
-        this.errorMessage]);
+      this.status,
+      this.statusDetail,
+      this.paymentMethodId,
+      this.paymentTypeId,
+      this.issuerId,
+      this.installments,
+      this.captured,
+      this.liveMode,
+      this.operationType,
+      this.transactionAmount,
+      this.errorMessage]);
 
   factory _$_PaymentResult.fromJson(Map<String, dynamic> json) =>
       _$_$_PaymentResultFromJson(json);
@@ -248,7 +251,7 @@ class _$_PaymentResult implements _PaymentResult {
   @override
   final String? issuerId;
   @override
-  final String? installments;
+  final int? installments;
   @override
   final bool? captured;
   @override
@@ -337,20 +340,20 @@ class _$_PaymentResult implements _PaymentResult {
 abstract class _PaymentResult implements PaymentResult {
   const factory _PaymentResult(String result,
       [int? id,
-        String? status,
-        String? statusDetail,
-        String? paymentMethodId,
-        String? paymentTypeId,
-        String? issuerId,
-        String? installments,
-        bool? captured,
-        bool? liveMode,
-        String? operationType,
-        String? transactionAmount,
-        String? errorMessage]) = _$_PaymentResult;
+      String? status,
+      String? statusDetail,
+      String? paymentMethodId,
+      String? paymentTypeId,
+      String? issuerId,
+      int? installments,
+      bool? captured,
+      bool? liveMode,
+      String? operationType,
+      String? transactionAmount,
+      String? errorMessage]) = _$_PaymentResult;
 
   factory _PaymentResult.fromJson(Map<String, dynamic> json) =
-  _$_PaymentResult.fromJson;
+      _$_PaymentResult.fromJson;
 
   @override
   String get result;
@@ -367,7 +370,7 @@ abstract class _PaymentResult implements PaymentResult {
   @override
   String? get issuerId;
   @override
-  String? get installments;
+  int? get installments;
   @override
   bool? get captured;
   @override

@@ -6,10 +6,6 @@ import 'src/payment_result.dart';
 export 'src/payment_result.dart';
 
 class MercadoPago {
-  /* Future<String?> getPlatformVersion() {
-    return MercadoPagoPlatform.instance.getPlatformVersion();
-  } */
-
   static const MethodChannel _channel = MethodChannel('mercado_pago');
 
   static Future<String?> get platformVersion async {
