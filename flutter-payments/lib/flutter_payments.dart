@@ -12,7 +12,7 @@ class FlutterPayments {
     return version;
   }
 
-  static Future<PaymentResult> startCheckout(
+  static Future<PaymentResult> payWithMercadoPagoCheckout(
     String publicKey,
     String preferenceId,
   ) async {
