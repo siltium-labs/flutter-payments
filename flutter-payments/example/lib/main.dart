@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:mercado_pago/mercado_pago.dart';
+import 'package:flutter_payments/flutter_payments.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      platformVersion = await MercadoPago.platformVersion;
+      platformVersion = await FlutterPayments.platformVersion;
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
               Text('Running on: $_platformVersion\n'),
               ElevatedButton(
                 onPressed: () async {
-                  PaymentResult result = await MercadoPago.startCheckout(
+                  PaymentResult result = await FlutterPayments.startCheckout(
                     publicKey,
                     preferenceId,
                   );

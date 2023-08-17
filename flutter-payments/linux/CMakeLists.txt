@@ -4,16 +4,16 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Project-level configuration.
-set(PROJECT_NAME "mercado_pago")
+set(PROJECT_NAME "flutter_payments")
 project(${PROJECT_NAME} LANGUAGES CXX)
 
 # This value is used when generating builds using this plugin, so it must
 # not be changed.
-set(PLUGIN_NAME "mercado_pago_plugin")
+set(PLUGIN_NAME "flutter_payments_plugin")
 
 # Any new source files that you add to the plugin should be added here.
 list(APPEND PLUGIN_SOURCES
-  "mercado_pago_plugin.cc"
+  "flutter_payments_plugin.cc"
 )
 
 # Define the plugin library target. Its name must not be changed (see comment
@@ -44,7 +44,7 @@ target_link_libraries(${PLUGIN_NAME} PRIVATE PkgConfig::GTK)
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list could contain prebuilt libraries, or libraries created by an
 # external build triggered from this build file.
-set(mercado_pago_bundled_libraries
+set(flutter_payments_bundled_libraries
   ""
   PARENT_SCOPE
 )
@@ -77,7 +77,7 @@ FetchContent_MakeAvailable(googletest)
 # The plugin's exported API is not very useful for unit testing, so build the
 # sources directly into the test binary rather than using the shared library.
 add_executable(${TEST_RUNNER}
-  test/mercado_pago_plugin_test.cc
+  test/flutter_payments_plugin_test.cc
   ${PLUGIN_SOURCES}
 )
 apply_standard_settings(${TEST_RUNNER})

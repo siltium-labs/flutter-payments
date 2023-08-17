@@ -1,14 +1,36 @@
+/* 
+import Flutter
+import UIKit
+
+public class FlutterPaymentsPlugin: NSObject, FlutterPlugin {
+  public static func register(with registrar: FlutterPluginRegistrar) {
+    let channel = FlutterMethodChannel(name: "flutter_payments", binaryMessenger: registrar.messenger())
+    let instance = FlutterPaymentsPlugin()
+    registrar.addMethodCallDelegate(instance, channel: channel)
+  }
+
+  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+    switch call.method {
+    case "getPlatformVersion":
+      result("iOS " + UIDevice.current.systemVersion)
+    default:
+      result(FlutterMethodNotImplemented)
+    }
+  }
+}
+*/
+
 import Flutter
 import UIKit
 import MercadoPagoSDK
 
-public class SwiftMercadoPagoPlugin: NSObject, FlutterPlugin, PXLifeCycleProtocol {
+public class SwiftFlutterPaymentsPlugin: NSObject, FlutterPlugin, PXLifeCycleProtocol {
 
   var pendingResult: FlutterResult?
 
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "mercado_pago", binaryMessenger: registrar.messenger())
-    let instance = SwiftMercadoPagoPlugin()
+    let instance = SwiftFlutterPaymentsPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 

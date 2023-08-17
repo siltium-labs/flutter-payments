@@ -6,9 +6,9 @@
 
 #include "generated_plugin_registrant.h"
 
-#include <mercado_pago/mercado_pago_plugin_c_api.h>
+#include <flutter_payments/flutter_payments_plugin_c_api.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
-  MercadoPagoPluginCApiRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("MercadoPagoPluginCApi"));
+  FlutterPaymentsPluginCApiRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("FlutterPaymentsPluginCApi"));
 }

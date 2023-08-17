@@ -1,12 +1,12 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mercado_pago/mercado_pago_method_channel.dart';
+import 'package:flutter_payments/flutter_payments_method_channel.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  MethodChannelMercadoPago platform = MethodChannelMercadoPago();
-  const MethodChannel channel = MethodChannel('mercado_pago');
+  MethodChannelFlutterPayments platform = MethodChannelFlutterPayments();
+  const MethodChannel channel = MethodChannel('flutter_payments');
 
   setUp(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(

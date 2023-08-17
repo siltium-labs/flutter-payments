@@ -1,4 +1,4 @@
-group 'com.siltium.mercado_pago'
+group 'com.siltium.flutter_payments'
 version '1.0-SNAPSHOT'
 
 buildscript {

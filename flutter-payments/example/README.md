@@ -1,6 +1,6 @@
-# mercado_pago_example
+# flutter_payments_example
 
-Demonstrates how to use the mercado_pago plugin.
+Demonstrates how to use the flutter_payments plugin.
 
 ## Getting Started
 

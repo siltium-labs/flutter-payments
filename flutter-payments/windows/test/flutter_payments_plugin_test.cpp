@@ -8,9 +8,9 @@
 #include <string>
 #include <variant>
 
-#include "mercado_pago_plugin.h"
+#include "flutter_payments_plugin.h"
 
-namespace mercado_pago {
+namespace flutter_payments {
 namespace test {
 
 namespace {
@@ -22,8 +22,8 @@ using flutter::MethodResultFunctions;
 
 }  // namespace
 
-TEST(MercadoPagoPlugin, GetPlatformVersion) {
-  MercadoPagoPlugin plugin;
+TEST(FlutterPaymentsPlugin, GetPlatformVersion) {
+  FlutterPaymentsPlugin plugin;
   // Save the reply value from the success callback.
   std::string result_string;
   plugin.HandleMethodCall(
@@ -40,4 +40,4 @@ TEST(MercadoPagoPlugin, GetPlatformVersion) {
 }
 
 }  // namespace test
-}  // namespace mercado_pago
+}  // namespace flutter_payments

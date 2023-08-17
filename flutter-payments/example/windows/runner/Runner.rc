@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.siltium" "\0"
-            VALUE "FileDescription", "mercado_pago_example" "\0"
+            VALUE "FileDescription", "flutter_payments_example" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "mercado_pago_example" "\0"
+            VALUE "InternalName", "flutter_payments_example" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.siltium. All rights reserved." "\0"
-            VALUE "OriginalFilename", "mercado_pago_example.exe" "\0"
-            VALUE "ProductName", "mercado_pago_example" "\0"
+            VALUE "OriginalFilename", "flutter_payments_example.exe" "\0"
+            VALUE "ProductName", "flutter_payments_example" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

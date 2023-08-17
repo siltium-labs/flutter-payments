@@ -1,10 +1,10 @@
 import Cocoa
 import FlutterMacOS
 
-public class MercadoPagoPlugin: NSObject, FlutterPlugin {
+public class FlutterPaymentsPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "mercado_pago", binaryMessenger: registrar.messenger)
-    let instance = MercadoPagoPlugin()
+    let channel = FlutterMethodChannel(name: "flutter_payments", binaryMessenger: registrar.messenger)
+    let instance = FlutterPaymentsPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 

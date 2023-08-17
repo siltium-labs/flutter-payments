@@ -1,4 +1,4 @@
-#include "include/mercado_pago/mercado_pago_plugin.h"
+#include "include/flutter_payments/flutter_payments_plugin.h"
 
 #include <flutter_linux/flutter_linux.h>
 #include <gtk/gtk.h>
@@ -6,21 +6,21 @@
 
 #include <cstring>
 
-#include "mercado_pago_plugin_private.h"
+#include "flutter_payments_plugin_private.h"
 
-#define MERCADO_PAGO_PLUGIN(obj) \
-  (G_TYPE_CHECK_INSTANCE_CAST((obj), mercado_pago_plugin_get_type(), \
-                              MercadoPagoPlugin))
+#define FLUTTER_PAYMENTS_PLUGIN(obj) \
+  (G_TYPE_CHECK_INSTANCE_CAST((obj), flutter_payments_plugin_get_type(), \
+                              FlutterPaymentsPlugin))
 
-struct _MercadoPagoPlugin {
+struct _FlutterPaymentsPlugin {
   GObject parent_instance;
 };
 
-G_DEFINE_TYPE(MercadoPagoPlugin, mercado_pago_plugin, g_object_get_type())
+G_DEFINE_TYPE(FlutterPaymentsPlugin, flutter_payments_plugin, g_object_get_type())
 
 // Called when a method call is received from Flutter.
-static void mercado_pago_plugin_handle_method_call(
-    MercadoPagoPlugin* self,
+static void flutter_payments_plugin_handle_method_call(
+    FlutterPaymentsPlugin* self,
     FlMethodCall* method_call) {
   g_autoptr(FlMethodResponse) response = nullptr;
 
@@ -43,30 +43,30 @@ FlMethodResponse* get_platform_version() {
   return FL_METHOD_RESPONSE(fl_method_success_response_new(result));
 }
 
-static void mercado_pago_plugin_dispose(GObject* object) {
-  G_OBJECT_CLASS(mercado_pago_plugin_parent_class)->dispose(object);
+static void flutter_payments_plugin_dispose(GObject* object) {
+  G_OBJECT_CLASS(flutter_payments_plugin_parent_class)->dispose(object);
 }
 
-static void mercado_pago_plugin_class_init(MercadoPagoPluginClass* klass) {
-  G_OBJECT_CLASS(klass)->dispose = mercado_pago_plugin_dispose;
+static void flutter_payments_plugin_class_init(FlutterPaymentsPluginClass* klass) {
+  G_OBJECT_CLASS(klass)->dispose = flutter_payments_plugin_dispose;
 }
 
-static void mercado_pago_plugin_init(MercadoPagoPlugin* self) {}
+static void flutter_payments_plugin_init(FlutterPaymentsPlugin* self) {}
 
 static void method_call_cb(FlMethodChannel* channel, FlMethodCall* method_call,
                            gpointer user_data) {
-  MercadoPagoPlugin* plugin = MERCADO_PAGO_PLUGIN(user_data);
-  mercado_pago_plugin_handle_method_call(plugin, method_call);
+  FlutterPaymentsPlugin* plugin = FLUTTER_PAYMENTS_PLUGIN(user_data);
+  flutter_payments_plugin_handle_method_call(plugin, method_call);
 }
 
-void mercado_pago_plugin_register_with_registrar(FlPluginRegistrar* registrar) {
-  MercadoPagoPlugin* plugin = MERCADO_PAGO_PLUGIN(
-      g_object_new(mercado_pago_plugin_get_type(), nullptr));
+void flutter_payments_plugin_register_with_registrar(FlPluginRegistrar* registrar) {
+  FlutterPaymentsPlugin* plugin = FLUTTER_PAYMENTS_PLUGIN(
+      g_object_new(flutter_payments_plugin_get_type(), nullptr));
 
   g_autoptr(FlStandardMethodCodec) codec = fl_standard_method_codec_new();
   g_autoptr(FlMethodChannel) channel =
       fl_method_channel_new(fl_plugin_registrar_get_messenger(registrar),
-                            "mercado_pago",
+                            "flutter_payments",
                             FL_METHOD_CODEC(codec));
   fl_method_channel_set_method_call_handler(channel, method_call_cb,
                                             g_object_ref(plugin),

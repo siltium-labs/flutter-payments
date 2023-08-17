@@ -1,4 +1,4 @@
-name: mercado_pago
+name: flutter_payments
 description: A new Flutter plugin project.
 version: 0.0.1
 homepage:
@@ -39,16 +39,16 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.siltium.mercado_pago
-        pluginClass: MercadoPagoPlugin
+        package: com.siltium.flutter_payments
+        pluginClass: FlutterPaymentsPlugin
       ios:
-        pluginClass: MercadoPagoPlugin
+        pluginClass: FlutterPaymentsPlugin
       linux:
-        pluginClass: MercadoPagoPlugin
+        pluginClass: FlutterPaymentsPlugin
       macos:
-        pluginClass: MercadoPagoPlugin
+        pluginClass: FlutterPaymentsPlugin
       windows:
-        pluginClass: MercadoPagoPluginCApi
+        pluginClass: FlutterPaymentsPluginCApi
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

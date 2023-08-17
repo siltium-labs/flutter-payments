@@ -83,6 +83,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.2"
+  flutter_payments:
+    dependency: "direct main"
+    description:
+      path: ".."
+      relative: true
+    source: path
+    version: "0.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -146,13 +153,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0"
-  mercado_pago:
-    dependency: "direct main"
-    description:
-      path: ".."
-      relative: true
-    source: path
-    version: "0.0.1"
   meta:
     dependency: transitive
     description:

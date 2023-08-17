@@ -1,24 +1,24 @@
-#ifndef FLUTTER_PLUGIN_MERCADO_PAGO_PLUGIN_H_
-#define FLUTTER_PLUGIN_MERCADO_PAGO_PLUGIN_H_
+#ifndef FLUTTER_PLUGIN_FLUTTER_PAYMENTS_PLUGIN_H_
+#define FLUTTER_PLUGIN_FLUTTER_PAYMENTS_PLUGIN_H_
 
 #include <flutter/method_channel.h>
 #include <flutter/plugin_registrar_windows.h>
 
 #include <memory>
 
-namespace mercado_pago {
+namespace flutter_payments {
 
-class MercadoPagoPlugin : public flutter::Plugin {
+class FlutterPaymentsPlugin : public flutter::Plugin {
  public:
   static void RegisterWithRegistrar(flutter::PluginRegistrarWindows *registrar);
 
-  MercadoPagoPlugin();
+  FlutterPaymentsPlugin();
 
-  virtual ~MercadoPagoPlugin();
+  virtual ~FlutterPaymentsPlugin();
 
   // Disallow copy and assign.
-  MercadoPagoPlugin(const MercadoPagoPlugin&) = delete;
-  MercadoPagoPlugin& operator=(const MercadoPagoPlugin&) = delete;
+  FlutterPaymentsPlugin(const FlutterPaymentsPlugin&) = delete;
+  FlutterPaymentsPlugin& operator=(const FlutterPaymentsPlugin&) = delete;
 
   // Called when a method is called on this plugin's channel from Dart.
   void HandleMethodCall(
@@ -26,6 +26,6 @@ class MercadoPagoPlugin : public flutter::Plugin {
       std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result);
 };
 
-}  // namespace mercado_pago
+}  // namespace flutter_payments
 
-#endif  // FLUTTER_PLUGIN_MERCADO_PAGO_PLUGIN_H_
+#endif  // FLUTTER_PLUGIN_FLUTTER_PAYMENTS_PLUGIN_H_

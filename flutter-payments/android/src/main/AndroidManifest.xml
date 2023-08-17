@@ -1,3 +1,3 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.siltium.mercado_pago">
+  package="com.siltium.flutter_payments">
 </manifest>

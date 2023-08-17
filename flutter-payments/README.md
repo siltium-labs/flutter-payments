@@ -1,4 +1,4 @@
-# mercado_pago
+# flutter_payments
 
 A new Flutter plugin project.
 

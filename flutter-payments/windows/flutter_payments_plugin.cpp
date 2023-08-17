@@ -1,4 +1,4 @@
-#include "mercado_pago_plugin.h"
+#include "flutter_payments_plugin.h"
 
 // This must be included before many other Windows headers.
 #include <windows.h>
@@ -13,17 +13,17 @@
 #include <memory>
 #include <sstream>
 
-namespace mercado_pago {
+namespace flutter_payments {
 
 // static
-void MercadoPagoPlugin::RegisterWithRegistrar(
+void FlutterPaymentsPlugin::RegisterWithRegistrar(
     flutter::PluginRegistrarWindows *registrar) {
   auto channel =
       std::make_unique<flutter::MethodChannel<flutter::EncodableValue>>(
-          registrar->messenger(), "mercado_pago",
+          registrar->messenger(), "flutter_payments",
           &flutter::StandardMethodCodec::GetInstance());
 
-  auto plugin = std::make_unique<MercadoPagoPlugin>();
+  auto plugin = std::make_unique<FlutterPaymentsPlugin>();
 
   channel->SetMethodCallHandler(
       [plugin_pointer = plugin.get()](const auto &call, auto result) {
@@ -33,11 +33,11 @@ void MercadoPagoPlugin::RegisterWithRegistrar(
   registrar->AddPlugin(std::move(plugin));
 }
 
-MercadoPagoPlugin::MercadoPagoPlugin() {}
+FlutterPaymentsPlugin::FlutterPaymentsPlugin() {}
 
-MercadoPagoPlugin::~MercadoPagoPlugin() {}
+FlutterPaymentsPlugin::~FlutterPaymentsPlugin() {}
 
-void MercadoPagoPlugin::HandleMethodCall(
+void FlutterPaymentsPlugin::HandleMethodCall(
     const flutter::MethodCall<flutter::EncodableValue> &method_call,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
   if (method_call.method_name().compare("getPlatformVersion") == 0) {
@@ -56,4 +56,4 @@ void MercadoPagoPlugin::HandleMethodCall(
   }
 }
 
-}  // namespace mercado_pago
+}  // namespace flutter_payments

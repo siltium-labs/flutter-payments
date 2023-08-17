@@ -5,8 +5,8 @@
 import FlutterMacOS
 import Foundation
 
-import mercado_pago
+import flutter_payments
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
-  MercadoPagoPlugin.register(with: registry.registrar(forPlugin: "MercadoPagoPlugin"))
+  FlutterPaymentsPlugin.register(with: registry.registrar(forPlugin: "FlutterPaymentsPlugin"))
 }

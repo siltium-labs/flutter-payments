@@ -6,10 +6,10 @@
 
 #include "generated_plugin_registrant.h"
 
-#include <mercado_pago/mercado_pago_plugin.h>
+#include <flutter_payments/flutter_payments_plugin.h>
 
 void fl_register_plugins(FlPluginRegistry* registry) {
-  g_autoptr(FlPluginRegistrar) mercado_pago_registrar =
-      fl_plugin_registry_get_registrar_for_plugin(registry, "MercadoPagoPlugin");
-  mercado_pago_plugin_register_with_registrar(mercado_pago_registrar);
+  g_autoptr(FlPluginRegistrar) flutter_payments_registrar =
+      fl_plugin_registry_get_registrar_for_plugin(registry, "FlutterPaymentsPlugin");
+  flutter_payments_plugin_register_with_registrar(flutter_payments_registrar);
 }

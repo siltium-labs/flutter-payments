@@ -1,12 +1,12 @@
-#include "include/mercado_pago/mercado_pago_plugin_c_api.h"
+#include "include/flutter_payments/flutter_payments_plugin_c_api.h"
 
 #include <flutter/plugin_registrar_windows.h>
 
-#include "mercado_pago_plugin.h"
+#include "flutter_payments_plugin.h"
 
-void MercadoPagoPluginCApiRegisterWithRegistrar(
+void FlutterPaymentsPluginCApiRegisterWithRegistrar(
     FlutterDesktopPluginRegistrarRef registrar) {
-  mercado_pago::MercadoPagoPlugin::RegisterWithRegistrar(
+  flutter_payments::FlutterPaymentsPlugin::RegisterWithRegistrar(
       flutter::PluginRegistrarManager::GetInstance()
           ->GetRegistrar<flutter::PluginRegistrarWindows>(registrar));
 }

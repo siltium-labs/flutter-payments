@@ -1,4 +1,4 @@
-package com.siltium.mercado_pago
+package com.siltium.flutter_payments
 
 import android.app.Activity
 import android.app.Activity.RESULT_CANCELED
@@ -18,8 +18,8 @@ import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.ActivityResultListener
 import io.flutter.plugin.common.PluginRegistry.Registrar
 
-/** MercadoPagoPlugin */
-class MercadoPagoPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, ActivityResultListener {
+/** FlutterPaymentsPlugin */
+class FlutterPaymentsPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, ActivityResultListener {
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -44,7 +44,7 @@ class MercadoPagoPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, Activi
         val publicKey = args["publicKey"] as String
         val preferenceId = args["preferenceId"] as String
 
-        Log.d("MercadoPagoPlugin", "Starting checkout for $preferenceId")
+        Log.d("FlutterPaymentsPlugin", "Starting checkout for $preferenceId")
         startCheckout(publicKey, preferenceId, result)
       } else {
         result.error("1", "Another operation in progress", null)
@@ -68,7 +68,7 @@ class MercadoPagoPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, Activi
   }
 
   override fun onDetachedFromActivity() {
-    Log.d("MercadoPagoPlugin", "onDetachedFromActivity")
+    Log.d("FlutterPaymentsPlugin", "onDetachedFromActivity")
     activity = null
   }
 
@@ -76,7 +76,7 @@ class MercadoPagoPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, Activi
   }
 
   override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-    Log.d("MercadoPagoPlugin", "onAttachedToActivity")
+    Log.d("FlutterPaymentsPlugin", "onAttachedToActivity")
     activity = binding.activity
     binding.addActivityResultListener(this)
   }
@@ -85,7 +85,7 @@ class MercadoPagoPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, Activi
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
-    Log.d("MercadoPagoPlugin", "onActivityResult")
+    Log.d("FlutterPaymentsPlugin", "onActivityResult")
 
     if (requestCode == REQUEST_CODE) {
       if (resultCode == MercadoPagoCheckout.PAYMENT_RESULT_CODE) {

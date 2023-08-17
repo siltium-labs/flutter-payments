@@ -3,7 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  mercado_pago
+  flutter_payments
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

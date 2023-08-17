@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
-//import 'mercado_pago_platform_interface.dart';
 import 'src/payment_result.dart';
 
 export 'src/payment_result.dart';
 
-class MercadoPago {
+class FlutterPayments {
   static const MethodChannel _channel = MethodChannel('mercado_pago');
 
   static Future<String?> get platformVersion async {
