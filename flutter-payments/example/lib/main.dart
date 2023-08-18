@@ -12,6 +12,8 @@ void main() {
 // const preferenceId = "YOUR ID";
 const publicKeyTest = "TEST-81d8a608-abf0-4d87-8575-edee2427d378";
 const preferenceIdTest = "222344382-b941a00f-b511-4e1d-bac5-d74f78586c09";
+const accessTokenTest =
+    "TEST-1563356252471753-080709-33fb458ed3d3fc24b9d54032f0e045fd-222344382";
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -68,6 +70,12 @@ class _MyAppState extends State<MyApp> {
                 },
                 child: const Text("Pagar con Mercado Pago"),
               ),
+              ElevatedButton(
+                onPressed: () {
+                  getTockenCardMercadoPago();
+                },
+                child: const Text("Tocken Card Mercado Pago"),
+              ),
             ],
           ),
         ),
@@ -92,5 +100,18 @@ class _MyAppState extends State<MyApp> {
       print("Pago Aprobado");
       ;
     }
+  }
+
+  void getTockenCardMercadoPago() async {
+    String token = await FlutterPayments.getTockenCardMercadoPago(
+      accessToken: accessTokenTest,
+      cardNumber: "4509953566233704",
+      cardHolder: "JORGE",
+      expirationMonth: "11",
+      expirationYear: "2025",
+      cvv: "123",
+    );
+
+    print("Token: $token");
   }
 }

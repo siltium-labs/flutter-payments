@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'src/models/payment_result.dart';
+import 'src/models/mercado_pago/payment_result.dart';
+import 'package:http/http.dart' as http;
 
-export 'src/models/payment_result.dart';
+export 'src/models/mercado_pago/payment_result.dart';
 
 // Plugin class (with Method Channel) ------------------------------------------
 class _FlutterPaymentsChannel {
@@ -72,6 +74,37 @@ class FlutterPayments {
       preferenceId: preferenceId,
     );
     return paymentResult;
+  }
+
+  static Future<String> getTockenCardMercadoPago({
+    required String accessToken,
+    required String cardNumber,
+    required String cardHolder,
+    required String expirationMonth,
+    required String expirationYear,
+    required String cvv,
+  }) async {
+    final response = await http.post(
+      Uri.parse('https://api.mercadopago.com/v1/card_tokens'),
+      headers: {
+        "Authorization": "Bearer $accessToken",
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: {
+        "card_number": cardNumber,
+        "security_code": cvv,
+        "expiration_month": expirationMonth,
+        "expiration_year": expirationYear,
+        "cardholder": ({"name": cardHolder}).toString(),
+      },
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final Map<String, dynamic> responseBody = json.decode(response.body);
+      return responseBody["id"];
+    } else {
+      throw Exception('Error tokenizing card');
+    }
   }
 
   // MACRO
