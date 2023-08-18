@@ -29,7 +29,7 @@ public class SwiftFlutterPaymentsPlugin: NSObject, FlutterPlugin, PXLifeCyclePro
   var pendingResult: FlutterResult?
 
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "mercado_pago", binaryMessenger: registrar.messenger())
+    let channel = FlutterMethodChannel(name: "flutter_payments_method_channel", binaryMessenger: registrar.messenger())
     let instance = SwiftFlutterPaymentsPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
@@ -37,21 +37,21 @@ public class SwiftFlutterPaymentsPlugin: NSObject, FlutterPlugin, PXLifeCyclePro
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     if (call.method == "getPlatformVersion") {
         result("iOS " + UIDevice.current.systemVersion)
-    } else if (call.method == "startCheckout") {
+    } else if (call.method == "startCheckoutWithMercadoPago") {
         let args = call.arguments as! Dictionary<String, String>
         let publicKey = args["publicKey"] ?? ""
         let preferenceId = args["preferenceId"] ?? ""
 
         pendingResult = result
 
-        startCheckout(publicKey: publicKey, preferenceId: preferenceId)
+        startCheckoutWithMercadoPago(publicKey: publicKey, preferenceId: preferenceId)
     } else {
         handleNavigationBar(isMercadoPagoActive: false)
         result(FlutterMethodNotImplemented)
     }
   }
 
-  private func startCheckout(publicKey: String, preferenceId: String) {
+  private func startCheckoutWithMercadoPago(publicKey: String, preferenceId: String) {
       let checkout = MercadoPago.init(builder: MercadoPagoBuilder.init(publicKey: publicKey, preferenceId: preferenceId))
 
       handleNavigationBar(isMercadoPagoActive: true)

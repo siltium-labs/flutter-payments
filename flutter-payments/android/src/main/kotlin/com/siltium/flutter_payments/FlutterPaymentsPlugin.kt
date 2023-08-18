@@ -31,21 +31,21 @@ class FlutterPaymentsPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, Ac
   private val REQUEST_CODE = 13313
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "mercado_pago")
+    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutter_payments_method_channel")
     channel.setMethodCallHandler(this)
   }
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
     if (call.method == "getPlatformVersion") {
       result.success("Android ${android.os.Build.VERSION.RELEASE}")
-    } else if (call.method == "startCheckout") {
+    } else if (call.method == "startCheckoutWithMercadoPago") {
       if (pendingResult == null) {
         val args = call.arguments as HashMap<*, *>
         val publicKey = args["publicKey"] as String
         val preferenceId = args["preferenceId"] as String
 
         Log.d("FlutterPaymentsPlugin", "Starting checkout for $preferenceId")
-        startCheckout(publicKey, preferenceId, result)
+        startCheckoutWithMercadoPago(publicKey, preferenceId, result)
       } else {
         result.error("1", "Another operation in progress", null)
       }
@@ -58,7 +58,7 @@ class FlutterPaymentsPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, Ac
     channel.setMethodCallHandler(null)
   }
 
-  private fun startCheckout(publicKey: String, preferenceId: String, result: Result) {
+  private fun startCheckoutWithMercadoPago(publicKey: String, preferenceId: String, result: Result) {
     if (activity != null) {
       pendingResult = result
       MercadoPagoCheckout.Builder(publicKey, preferenceId).build().startPayment(activity!!, REQUEST_CODE)

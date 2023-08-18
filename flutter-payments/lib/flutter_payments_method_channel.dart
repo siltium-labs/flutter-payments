@@ -7,7 +7,7 @@ import 'flutter_payments_platform_interface.dart';
 class MethodChannelFlutterPayments extends FlutterPaymentsPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final methodChannel = const MethodChannel('mercado_pago');
+  final methodChannel = const MethodChannel('flutter_payments_method_channel');
 
   @override
   Future<String?> getPlatformVersion() async {

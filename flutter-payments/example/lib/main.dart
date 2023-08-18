@@ -10,8 +10,8 @@ void main() {
 
 // const publicKey = "YOUR KEY";
 // const preferenceId = "YOUR ID";
-const publicKey = "TEST-81d8a608-abf0-4d87-8575-edee2427d378";
-const preferenceId = "222344382-b941a00f-b511-4e1d-bac5-d74f78586c09";
+const publicKeyTest = "TEST-81d8a608-abf0-4d87-8575-edee2427d378";
+const preferenceIdTest = "222344382-b941a00f-b511-4e1d-bac5-d74f78586c09";
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -78,12 +78,12 @@ class _MyAppState extends State<MyApp> {
   void payWithMercadoPago() async {
     PaymentResult paymentResult =
         await FlutterPayments.payWithMercadoPagoCheckout(
-      publicKey,
-      preferenceId,
+      publicKey: publicKeyTest,
+      preferenceId: preferenceIdTest,
     );
 
     if (paymentResult.errorMessage != null) {
-      print("PAgo Error: ${paymentResult.errorMessage}");
+      print("Pago Error: ${paymentResult.errorMessage}");
     } else if (paymentResult.result.toLowerCase() == "canceled") {
       print("Pago Cancelado");
     } else if (paymentResult.status == "rejected") {
