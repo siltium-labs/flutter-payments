@@ -10,6 +10,7 @@ void main() {
 
 // const publicKey = "YOUR KEY";
 // const preferenceId = "YOUR ID";
+// const accessTokenTest = "YOUR ACCESS TOKEN";
 const publicKeyTest = "TEST-81d8a608-abf0-4d87-8575-edee2427d378";
 const preferenceIdTest = "222344382-b941a00f-b511-4e1d-bac5-d74f78586c09";
 const accessTokenTest =
@@ -72,9 +73,9 @@ class _MyAppState extends State<MyApp> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  getTockenCardMercadoPago();
+                  getTokenCardMercadoPago();
                 },
-                child: const Text("Tocken Card Mercado Pago"),
+                child: const Text("Token Card Mercado Pago"),
               ),
             ],
           ),
@@ -102,11 +103,13 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  void getTockenCardMercadoPago() async {
-    String token = await FlutterPayments.getTockenCardMercadoPago(
+  void getTokenCardMercadoPago() async {
+    String token = await FlutterPayments.getTokenCardMercadoPago(
       accessToken: accessTokenTest,
+      //documentType: "DNI",
+      documentNumber: "12345678",
       cardNumber: "4509953566233704",
-      cardHolder: "JORGE",
+      cardHolder: "JORGE TEST",
       expirationMonth: "11",
       expirationYear: "2025",
       cvv: "123",

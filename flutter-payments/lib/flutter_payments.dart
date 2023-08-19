@@ -76,8 +76,10 @@ class FlutterPayments {
     return paymentResult;
   }
 
-  static Future<String> getTockenCardMercadoPago({
+  static Future<String> getTokenCardMercadoPago({
     required String accessToken,
+    String documentType = "DNI",
+    required String documentNumber,
     required String cardNumber,
     required String cardHolder,
     required String expirationMonth,
@@ -90,7 +92,13 @@ class FlutterPayments {
         "security_code": cvv,
         "expiration_month": expirationMonth,
         "expiration_year": expirationYear,
-        "cardholder": {"name": cardHolder},
+        "cardholder": {
+          "identification": {
+            "type": documentType,
+            "number": documentNumber,
+          },
+          "name": cardHolder,
+        },
       },
     );
     final response = await http.post(
