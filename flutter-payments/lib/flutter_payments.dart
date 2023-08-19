@@ -84,19 +84,22 @@ class FlutterPayments {
     required String expirationYear,
     required String cvv,
   }) async {
-    final response = await http.post(
-      Uri.parse('https://api.mercadopago.com/v1/card_tokens'),
-      headers: {
-        "Authorization": "Bearer $accessToken",
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: {
+    String body = json.encode(
+      {
         "card_number": cardNumber,
         "security_code": cvv,
         "expiration_month": expirationMonth,
         "expiration_year": expirationYear,
-        "cardholder": ({"name": cardHolder}).toString(),
+        "cardholder": {"name": cardHolder},
       },
+    );
+    final response = await http.post(
+      Uri.parse('https://api.mercadopago.com/v1/card_tokens'),
+      headers: {
+        "Authorization": "Bearer $accessToken",
+        "Content-Type": "application/json"
+      },
+      body: body,
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {

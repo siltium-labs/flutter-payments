@@ -112,6 +112,6 @@ class _MyAppState extends State<MyApp> {
       cvv: "123",
     );
 
-    print("Token: $token");
+    print("Token Card: $token");
   }
 }
