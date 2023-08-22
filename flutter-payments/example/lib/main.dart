@@ -1,120 +1,95 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
 import 'package:flutter/services.dart';
-import 'package:flutter_payments/flutter_payments.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'src/managers/page_manager.dart';
+import 'src/providers/app_provider.dart';
+import 'values/k_colors.dart';
+import '/src/ui/pages/init_page.dart';
+import '/src/enums/culture.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: kPrimary,
+  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AppProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
-
-// const publicKey = "YOUR KEY";
-// const preferenceId = "YOUR ID";
-// const accessTokenTest = "YOUR ACCESS TOKEN";
-const publicKeyTest = "TEST-81d8a608-abf0-4d87-8575-edee2427d378";
-const preferenceIdTest = "222344382-b941a00f-b511-4e1d-bac5-d74f78586c09";
-const accessTokenTest =
-    "TEST-1563356252471753-080709-33fb458ed3d3fc24b9d54032f0e045fd-222344382";
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
+
+  static void setLocale(BuildContext context, Locale newLocale) async {
+    _MyHomePageState? state =
+        context.findAncestorStateOfType<_MyHomePageState>();
+    state!.changeLanguage(newLocale);
+  }
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyAppState extends State<MyApp> {
-  String? _platformVersion = 'Unknown';
-
-  @override
-  void initState() {
-    super.initState();
-    initPlatformState();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String? platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion = await FlutterPayments.platformVersion;
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
-  }
+class _MyHomePageState extends State<MyApp> {
+  late Locale _locale = const Locale("es", '');
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('es', ''),
+        Locale('en', ''),
+      ],
+      navigatorKey: PageManager().navigatorKey,
+      locale: _locale,
+      onGenerateRoute: (settings) {
+        return PageManager().getRoute(settings);
+      },
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: 'Roboto',
+        scrollbarTheme: ScrollbarThemeData(
+          trackColor: MaterialStateProperty.all(Colors.grey),
+          thumbColor: MaterialStateProperty.all(Colors.grey),
+          trackBorderColor: MaterialStateProperty.all(Colors.grey),
         ),
-        body: Center(
-          child: Column(
-            children: [
-              const SizedBox(height: 50),
-              Text('Running on: $_platformVersion\n'),
-              ElevatedButton(
-                onPressed: () {
-                  payWithMercadoPago();
-                },
-                child: const Text("Pagar con Mercado Pago"),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  getTokenCardMercadoPago();
-                },
-                child: const Text("Token Card Mercado Pago"),
-              ),
-            ],
-          ),
-        ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      title: 'flutter_template',
+      home: _initPage(),
     );
   }
 
-  void payWithMercadoPago() async {
-    PaymentResult paymentResult =
-        await FlutterPayments.payWithMercadoPagoCheckout(
-      publicKey: publicKeyTest,
-      preferenceId: preferenceIdTest,
-    );
+  changeLanguage(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
 
-    if (paymentResult.errorMessage != null) {
-      print("Pago Error: ${paymentResult.errorMessage}");
-    } else if (paymentResult.result.toLowerCase() == "canceled") {
-      print("Pago Cancelado");
-    } else if (paymentResult.status == "rejected") {
-      print("Pago Rechazado");
-    } else if (paymentResult.status == "approved") {
-      print("Pago Aprobado");
-      ;
+  getCode(Culture code) {
+    switch (code) {
+      case Culture.es:
+        return 'es';
+      case Culture.en:
+        return 'en';
     }
   }
 
-  void getTokenCardMercadoPago() async {
-    String token = await FlutterPayments.getTokenCardMercadoPago(
-      accessToken: accessTokenTest,
-      //documentType: "DNI",
-      documentNumber: "12345678",
-      cardNumber: "4509953566233704",
-      cardHolder: "JORGE TEST",
-      expirationMonth: "11",
-      expirationYear: "2025",
-      cvv: "123",
-    );
-
-    print("Token Card: $token");
+  _initPage() {
+    return InitPage(null);
   }
 }
