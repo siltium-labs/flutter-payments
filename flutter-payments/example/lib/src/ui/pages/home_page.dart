@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_payments_example/src/managers/page_manager.dart';
+import 'package:flutter_payments_example/values/k_colors.dart';
+import 'package:flutter_payments_example/values/k_values.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../utils/page_args.dart';
@@ -23,40 +26,91 @@ class HomePagePageState extends StateMVC<HomePage> {
   @override
   void initState() {
     _con.initPage(arguments: widget.args);
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 50),
-                Text('Running on: ${_con.platformVersion}'),
-                ElevatedButton(
-                  onPressed: () {
-                    _con.payWithMercadoPago();
-                  },
-                  child: const Text("Pagar con Mercado Pago"),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    _con.openPopup();
-                  },
-                  child: const Text("Token Card Mercado Pago"),
-                ),
-                const SizedBox(height: 20),
-              ],
-            ),
+    return WillPopScope(
+      onWillPop: () async {
+        PageManager().openExitApplicationPopup();
+        return false;
+      },
+      child: MaterialApp(
+        home: Scaffold(
+          backgroundColor: kWhite,
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+            backgroundColor: kPrimary,
           ),
+          body: content(),
+        ),
+      ),
+    );
+  }
+
+  Widget content() {
+    return Center(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(height: 50),
+            Text(
+              'Running on: ${_con.platformVersion}',
+              style: const TextStyle(
+                color: kGray,
+                fontSize: kFontSize35,
+                fontWeight: kFontWeightRegular,
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 25,
+                  vertical: 10,
+                ),
+                backgroundColor: kPrimary,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+              ),
+              child: const Text(
+                "Pagar con Mercado Pago",
+                style: TextStyle(
+                  color: kWhite,
+                  fontSize: kFontSize40,
+                ),
+              ),
+              onPressed: () {
+                _con.payWithMercadoPago();
+              },
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 25,
+                  vertical: 10,
+                ),
+                backgroundColor: kPrimary,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+              ),
+              child: const Text(
+                "Token Card Mercado Pago",
+                style: TextStyle(
+                  color: kWhite,
+                  fontSize: kFontSize40,
+                ),
+              ),
+              onPressed: () {
+                _con.openPopup();
+              },
+            ),
+            const SizedBox(height: 20),
+          ],
         ),
       ),
     );

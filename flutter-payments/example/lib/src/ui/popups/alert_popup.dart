@@ -14,6 +14,8 @@ class AlertPopup {
   final Function? onClose;
   final Function? onAcceptPressed;
   final Function? onOptionalPressed;
+  final String? iconPath;
+  bool showImage = true;
 
   AlertPopup({
     required this.context,
@@ -24,7 +26,9 @@ class AlertPopup {
     this.onClose,
     this.onAcceptPressed,
     this.onOptionalPressed,
-    this.backgroundOpacity = 0.8,
+    this.backgroundOpacity = 0.5,
+    this.iconPath,
+    this.showImage = true,
   });
 
   final double radius = 20;
@@ -89,8 +93,10 @@ class AlertPopup {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(height: 20),
+            _icon(),
+            const SizedBox(height: 10),
             _title(),
-            const Divider(thickness: 2),
+            //const Divider(thickness: 2),
             const SizedBox(height: 15),
             _description(),
             const SizedBox(height: 15),
@@ -101,32 +107,48 @@ class AlertPopup {
     );
   }
 
+  _icon() {
+    if (showImage) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height * 0.1,
+          child: Image.asset(iconPath ?? "images/common/icon_popup_alert.png"),
+        ),
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
+  }
+
   _title() {
     return Material(
-        type: MaterialType.transparency,
-        child: Text(
-          title.isNotEmpty ? title : "",
-          softWrap: true,
-          style: const TextStyle(
-            color: kPrimary,
-            fontWeight: FontWeight.w400,
-            fontSize: kFontSize43,
-          ),
-        ));
+      type: MaterialType.transparency,
+      child: Text(
+        title.isNotEmpty ? title : "",
+        softWrap: true,
+        style: const TextStyle(
+          color: kPrimary,
+          fontSize: kFontSize60,
+          fontWeight: kFontWeightBold,
+        ),
+      ),
+    );
   }
 
   _description() {
     return Material(
-        type: MaterialType.transparency,
-        child: Text(
-          description.isNotEmpty ? description : "",
-          softWrap: true,
-          style: const TextStyle(
-            color: kPrimary,
-            fontWeight: FontWeight.w400,
-            fontSize: kFontSize43,
-          ),
-        ));
+      type: MaterialType.transparency,
+      child: Text(
+        description.isNotEmpty ? description : "",
+        softWrap: true,
+        style: const TextStyle(
+          color: kGrayT1,
+          fontSize: kFontSize43,
+          fontWeight: kFontWeightRegular,
+        ),
+      ),
+    );
   }
 
   _buttons() {
@@ -156,11 +178,13 @@ class AlertPopup {
   _buttonAccept() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.all(0),
-          foregroundColor: kPrimary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
-          )),
+        padding: const EdgeInsets.all(0),
+        foregroundColor: kPrimary,
+        backgroundColor: kPrimary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50),
+        ),
+      ),
       onPressed: () {
         Navigator.pop(context, false);
         if (onAcceptPressed != null) {
@@ -191,11 +215,12 @@ class AlertPopup {
   _buttonOptional() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.all(0),
-          foregroundColor: kPrimary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
-          )),
+        padding: const EdgeInsets.all(0),
+        backgroundColor: kRed,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50),
+        ),
+      ),
       onPressed: () {
         Navigator.pop(context, false);
         if (onAcceptPressed != null) {

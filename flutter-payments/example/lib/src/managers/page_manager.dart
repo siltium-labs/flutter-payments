@@ -160,10 +160,10 @@ class PageManager {
   }) async {
     return await AlertPopup(
       context: navigatorKey.currentState!.context,
-      title: "Are you sure?",
-      description: "You are about to quit Maintain",
-      labelButtonAccept: "Accept",
-      labelOptionalButton: "Cancel",
+      title: "Salir",
+      description: "¿Quiere salir de la App?",
+      labelButtonAccept: "Aceptar",
+      labelOptionalButton: "Cancelar",
       //isCancelable: true,
       //colorOptionalButton: kRed,
       onAcceptPressed: onAccept,

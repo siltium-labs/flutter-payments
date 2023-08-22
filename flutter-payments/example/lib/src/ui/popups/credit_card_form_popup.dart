@@ -13,10 +13,12 @@ import 'loading_popup.dart';
 class CreditCardFormPopup {
   final BuildContext context;
   String accessToken;
+  bool isCancellable = true;
 
   CreditCardFormPopup({
     required this.context,
     required this.accessToken,
+    this.isCancellable = true,
   });
 
   final double radius = 20;
@@ -50,7 +52,7 @@ class CreditCardFormPopup {
     return Container(
       width: width,
       height: height,
-      color: kPrimary.withOpacity(0.4),
+      color: kPrimary.withOpacity(0.5),
     );
   }
 
@@ -84,8 +86,7 @@ class CreditCardFormPopup {
 
   _buttonExit() {
     return Visibility(
-      //visible: isCancellable,
-      visible: true,
+      visible: isCancellable,
       child: Positioned.fill(
         child: Align(
           alignment: Alignment.topRight,
@@ -202,14 +203,15 @@ class _CreditCardFormPopupDialogState extends State<CreditCardFormPopupDialog> {
               isHolderNameVisible: true,
               //cardBgColor: cardBgColor,
               cardBgColor: kPrimary,
-              backgroundImage: useBackgroundImage ? 'assets/card_bg.png' : null,
+              backgroundImage:
+                  useBackgroundImage ? 'images/mercado_pago/card_bg.png' : null,
               isSwipeGestureEnabled: true,
               onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
               customCardTypeIcons: <CustomCardTypeIcon>[
                 CustomCardTypeIcon(
                   cardType: CardType.mastercard,
                   cardImage: Image.asset(
-                    'assets/mastercard.png',
+                    'images/mercado_pago/mastercard.png',
                     height: 48,
                     width: 48,
                   ),

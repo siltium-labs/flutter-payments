@@ -1,6 +1,7 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_payments/flutter_payments.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'dart:async';
 
 import '../../interfaces/i_view_controller.dart';
 import '../../managers/page_manager.dart';
@@ -21,8 +22,8 @@ class HomePageController extends ControllerMVC implements IViewController {
   HomePageController._();
 
   bool isLoading = false;
+  String? platformVersion = 'Unknown';
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   // const publicKey = "YOUR KEY";
   // const preferenceId = "YOUR ID";
   // const accessTokenTest = "YOUR ACCESS TOKEN";
@@ -31,17 +32,10 @@ class HomePageController extends ControllerMVC implements IViewController {
   String accessTokenTest =
       "TEST-1563356252471753-080709-33fb458ed3d3fc24b9d54032f0e045fd-222344382";
 
-  String? platformVersion = 'Unknown';
-  String cardNumber = '';
-  String expiryDate = '';
-  String cardHolderName = '';
-  String cvvCode = '';
-  bool isCvvFocused = false;
-  bool useGlassMorphism = false;
-  bool useBackgroundImage = false;
-
   @override
-  void initPage({PageArgs? arguments}) {}
+  void initPage({PageArgs? arguments}) {
+    initPlatformState();
+  }
 
   @override
   disposePage() {}
@@ -92,6 +86,26 @@ class HomePageController extends ControllerMVC implements IViewController {
 
     return preferenceId;
   } */
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initPlatformState() async {
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    // We also handle the message potentially returning null.
+    try {
+      platformVersion = await FlutterPayments.platformVersion;
+    } on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    //if (!mounted) return;
+
+    setState(() {
+      platformVersion = platformVersion;
+    });
+  }
 
   Future<void> getPreferenceId() async {
     await Future.delayed(const Duration(seconds: 2));

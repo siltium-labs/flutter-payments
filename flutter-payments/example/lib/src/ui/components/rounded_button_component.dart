@@ -13,7 +13,7 @@ class RoundedButtonComponent extends StatefulWidget {
     this.fontWeight = kFontWeightRegular,
     //Icono
     this.icon,
-    this.iconWidth = 20,
+    this.iconWidth = double.infinity,
     this.iconHeight = 20,
     //altura y ancho del boton
     this.height = 60,
