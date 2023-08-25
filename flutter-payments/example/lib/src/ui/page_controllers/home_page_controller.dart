@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_payments/flutter_payments.dart';
+import 'package:flutter_payments_example/values/k_colors.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'dart:async';
 
@@ -135,7 +136,7 @@ class HomePageController extends ControllerMVC implements IViewController {
 
   void payWithMercadoPago() async {
     PaymentResult paymentResult =
-        await FlutterPayments.payWithMercadoPagoCheckout(
+        await FlutterPayments.payWithMercadoPagoAutomatic(
       publicKey: publicKeyTest,
       preferenceId: preferenceIdTest,
     );
@@ -171,24 +172,13 @@ class HomePageController extends ControllerMVC implements IViewController {
     }
   }
 
-  /* void getTokenCardMercadoPago() async {
-    String token = await FlutterPayments.getTokenCardMercadoPago(
-      accessToken: accessTokenTest,
-      //documentType: "DNI",
-      documentNumber: "12345678",
-      cardNumber: "4509953566233704",
-      cardHolder: "JORGE TEST",
-      expirationMonth: "11",
-      expirationYear: "2025",
-      cvv: "123",
-    );
-
-    print("Token Card: $token");
-  } */
-
   void openPopup() async {
-    await PageManager().openCreditCardFormPopup(
+    String? tokenCardId = await FlutterPayments().payWithMercadoPagoManual(
+      context: PageManager().navigatorKey.currentContext!,
       accessToken: accessTokenTest,
+      themeColor: kPrimary,
     );
+
+    print("Obtuve resultado: $tokenCardId");
   }
 }

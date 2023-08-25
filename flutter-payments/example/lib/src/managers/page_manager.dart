@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_payments_example/src/ui/popups/credit_card_form_popup.dart';
 
 import '../enums/page_names.dart';
 import '../ui/pages/home_page.dart';
@@ -167,16 +166,6 @@ class PageManager {
       //isCancelable: true,
       //colorOptionalButton: kRed,
       onAcceptPressed: onAccept,
-    ).show();
-  }
-
-  openCreditCardFormPopup({
-    required String accessToken,
-  }) async {
-    BuildContext context = PageManager().navigatorKey.currentContext!;
-    return await CreditCardFormPopup(
-      context: context,
-      accessToken: accessToken,
     ).show();
   }
 }

@@ -1,10 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'src/models/mercado_pago/payment_result.dart';
+import 'flutter_payments.dart';
 import 'package:http/http.dart' as http;
 
 export 'src/models/mercado_pago/payment_result.dart';
+export 'src/components/common/loading_component.dart';
+export "src/view/credit_card_form_page.dart";
+export 'src/view/widget_card_form.dart';
+export 'src/view/credit_card_form_popup.dart';
 
 // Plugin class (with Method Channel) ------------------------------------------
 class _FlutterPaymentsChannel {
@@ -63,8 +68,19 @@ class FlutterPayments {
     return version;
   }
 
+  /* payWithMercadoPago({
+    required PaymentMethodEnum paymentMethodEnum,
+  }) async {
+    switch (paymentMethodEnum) {
+      case PaymentMethodEnum.automatic:
+        break;
+      case PaymentMethodEnum.manual:
+        break;
+    }
+  } */
+
   // MERCADO PAGO
-  static Future<PaymentResult> payWithMercadoPagoCheckout({
+  static Future<PaymentResult> payWithMercadoPagoAutomatic({
     required String publicKey,
     required String preferenceId,
   }) async {
@@ -74,6 +90,18 @@ class FlutterPayments {
       preferenceId: preferenceId,
     );
     return paymentResult;
+  }
+
+  payWithMercadoPagoManual({
+    required BuildContext context,
+    required String accessToken,
+    Color? themeColor,
+  }) async {
+    return await CreditCardFormPopup(
+      context: context,
+      accessToken: accessToken,
+      themColor: themeColor,
+    ).show();
   }
 
   static Future<String> getTokenCardMercadoPago({
