@@ -89,7 +89,7 @@ class FlutterPayments {
     return paymentResult;
   }
 
-  payWithMercadoPagoManual({
+  static Future<String?> payWithMercadoPagoManual({
     required BuildContext context,
     required String accessToken,
     Color? themeColor,

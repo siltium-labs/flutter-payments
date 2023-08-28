@@ -84,7 +84,7 @@ class HomePagePageState extends StateMVC<HomePage> {
                 ),
               ),
               onPressed: () {
-                _con.payWithMercadoPago();
+                _con.payWithMercadoPagoAutomatic();
               },
             ),
             const SizedBox(height: 20),
@@ -107,7 +107,7 @@ class HomePagePageState extends StateMVC<HomePage> {
                 ),
               ),
               onPressed: () {
-                _con.openPopup();
+                _con.payWithMercadoPagoManual();
               },
             ),
             const SizedBox(height: 20),

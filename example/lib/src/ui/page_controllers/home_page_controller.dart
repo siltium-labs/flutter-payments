@@ -134,7 +134,7 @@ class HomePageController extends ControllerMVC implements IViewController {
 
   void _onResultData(dynamic data) async {}
 
-  void payWithMercadoPago() async {
+  void payWithMercadoPagoAutomatic() async {
     PaymentResult paymentResult =
         await FlutterPayments.payWithMercadoPagoAutomatic(
       publicKey: publicKeyTest,
@@ -172,8 +172,8 @@ class HomePageController extends ControllerMVC implements IViewController {
     }
   }
 
-  void openPopup() async {
-    String? tokenCardId = await FlutterPayments().payWithMercadoPagoManual(
+  void payWithMercadoPagoManual() async {
+    String? tokenCardId = await FlutterPayments.payWithMercadoPagoManual(
       context: PageManager().navigatorKey.currentContext!,
       accessToken: accessTokenTest,
       themeColor: kPrimary,
