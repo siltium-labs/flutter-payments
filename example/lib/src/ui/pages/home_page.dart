@@ -76,7 +76,7 @@ class HomePagePageState extends StateMVC<HomePage> {
                 ),
               ),
               child: const Text(
-                "Pagar con Mercado Pago",
+                "Pagar con Mercado Pago Automatico",
                 style: TextStyle(
                   color: kWhite,
                   fontSize: kFontSize40,
@@ -99,7 +99,7 @@ class HomePagePageState extends StateMVC<HomePage> {
                 ),
               ),
               child: const Text(
-                "Token Card Mercado Pago",
+                "Pagar con Mercado Pago Manual",
                 style: TextStyle(
                   color: kWhite,
                   fontSize: kFontSize40,
