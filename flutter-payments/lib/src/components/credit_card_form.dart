@@ -236,7 +236,9 @@ class _CreditCardFormState extends State<CreditCardForm> {
       TextEditingController();
   final TextEditingController _cvvCodeController =
       MaskedTextController(mask: '0000');
-  final TextEditingController _documentTypeController = TextEditingController();
+  final TextEditingController _documentTypeController = TextEditingController(
+    text: "DNI",
+  );
   final TextEditingController _documentNumberController =
       TextEditingController();
 
