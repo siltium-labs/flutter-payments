@@ -105,7 +105,7 @@ class FlutterPayments {
   static Future<String?> createPreferenceIdMercadoPago({
     required String accessToken,
     //body
-    required double title,
+    required String title,
     required int quantity,
     String currencyId = "ARG",
     required double unitPrice,

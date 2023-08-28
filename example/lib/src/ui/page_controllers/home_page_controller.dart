@@ -41,53 +41,6 @@ class HomePageController extends ControllerMVC implements IViewController {
   @override
   disposePage() {}
 
-  /* Future<Map<String, dynamic>> createPreference() async {
-    Map<String, dynamic> preference = {
-      "items": [
-        {
-          "title": "Test",
-          "quantity": 1,
-          "currency_id": "ARG",
-          "unit_price": 3500.52
-        }
-      ],
-      "payer": {
-        "name": "Jorge",
-        "email": "jmamani@gmail.com",
-      },
-      "payment_methods": {
-        "exclude_payment_types": [
-          //Tarjeta de crédito: "credit_card"
-          //Tarjeta de débito: "debit_card"
-          //Efectivo (pago en puntos de pago, como tiendas locales): "ticket"
-          //Transferencia bancaria: "bank_transfer"
-
-          {"id": "ticket"},
-          //{"id": "debit_card"},
-        ],
-      }
-
-      // Se puede quitar ek boton de "Promociones" agregando a este json "additional_info"
-    };
-    Map<String, dynamic> result = await mp.createPreference(preference);
-    return result;
-  }
-
-  String _getPreferenceId(Map<String, dynamic> preference) {
-    String preferenceId = preference["response"]["id"];
-    //print("PreferenceId: $preferenceId");
-
-    return preferenceId;
-  }
-
-  Future<String> getPreferenceId() async {
-    Map<String, dynamic> result = await createPreference();
-    String preferenceId = _getPreferenceId(result);
-    //print("PreferenceId: $preferenceId");
-
-    return preferenceId;
-  } */
-
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     // Platform messages may fail, so we use a try/catch PlatformException.
@@ -181,5 +134,26 @@ class HomePageController extends ControllerMVC implements IViewController {
     );
 
     print("Obtuve resultado: $result");
+  }
+
+  void createPreferenceIdMercadoPago() async {
+    String? preferenceID;
+
+    await LoadingPopup(
+      context: PageManager().navigatorKey.currentContext!,
+      onLoading: FlutterPayments.createPreferenceIdMercadoPago(
+        accessToken: accessTokenTest,
+        title: "Producto Siltium",
+        quantity: 2,
+        unitPrice: 5000.99,
+        name: "Jorge",
+        email: "jmamani@siltium.com",
+      ),
+      onResult: (String? result) {
+        preferenceID = result;
+      },
+    ).show();
+
+    print("preferenceID: $preferenceID");
   }
 }
