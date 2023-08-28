@@ -1,7 +1,7 @@
 name: flutter_payments
 description: Siltium plugin to pay
 version: 0.0.1
-homepage: https://github.com/siltium-labs/flutter-payments/tree/development
+homepage: https://github.com/siltium-labs/flutter-payments/tree/development/flutter-payments
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
