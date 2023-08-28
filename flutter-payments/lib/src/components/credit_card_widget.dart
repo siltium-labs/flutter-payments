@@ -1,13 +1,11 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'extension.dart';
-
-import 'constants.dart';
+import 'package:flutter_payments/src/utils/extensions.dart';
+import '../models/credit_card_brand.dart';
+import '../values/k_values.dart';
 import 'credit_card_animation.dart';
 import 'credit_card_background.dart';
-import 'credit_card_brand.dart';
-import 'custom_card_type_icon.dart';
+import '../models/custom_card_type_icon.dart';
 import 'glassmorphism_config.dart';
 
 const Map<CardType, String> cardTypeIconAsset = <CardType, String>{
@@ -50,7 +48,7 @@ class CreditCardWidget extends StatefulWidget {
     this.isSwipeGestureEnabled = true,
     this.customCardTypeIcons = const <CustomCardTypeIcon>[],
     required this.onCreditCardWidgetChange,
-    this.padding = AppConstants.creditCardPadding,
+    this.padding = creditCardPadding,
     this.chipColor,
     this.frontCardBorder,
     this.backCardBorder,
@@ -237,9 +235,8 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
       isGestureUpdate = false;
     }
 
-    final CardType? cardType = widget.cardType != null
-        ? widget.cardType
-        : detectCCType(widget.cardNumber);
+    final CardType cardType =
+        widget.cardType ?? detectCCType(widget.cardNumber);
     widget.onCreditCardWidgetChange(CreditCardBrand(cardType));
 
     return Stack(
@@ -343,17 +340,14 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
             .substring(0, number.length - 5)
             .trim()
             .replaceAll(RegExp(r'\d'), '*');
-        number = start + ' ' + stripped.substring(stripped.length - 4);
+        number = '$start ${stripped.substring(stripped.length - 4)}';
       } else if (stripped.length > 8) {
         final String middle = number
             .substring(4, number.length - 5)
             .trim()
             .replaceAll(RegExp(r'\d'), '*');
-        number = stripped.substring(0, 4) +
-            ' ' +
-            middle +
-            ' ' +
-            stripped.substring(stripped.length - 4);
+        number =
+            '${stripped.substring(0, 4)} $middle ${stripped.substring(stripped.length - 4)}';
       }
     }
     return CardBackground(

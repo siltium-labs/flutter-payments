@@ -1,8 +1,6 @@
 import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
-
-import 'constants.dart';
+import '../values/k_values.dart';
 import 'glassmorphism_config.dart';
 
 class CardBackground extends StatelessWidget {
@@ -74,7 +72,7 @@ class CardBackground extends StatelessWidget {
             height: height ??
                 (orientation == Orientation.portrait
                     ? (((width ?? screenWidth) - (padding * 2)) *
-                        AppConstants.creditCardAspectRatio)
+                        creditCardAspectRatio)
                     : screenHeight / 2),
             child: ClipRRect(
               clipBehavior: Clip.hardEdge,

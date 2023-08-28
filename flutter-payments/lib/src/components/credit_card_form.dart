@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'credit_card_model.dart';
+import '../models/credit_card_model.dart';
 import 'credit_card_widget.dart';
 //import 'flutter_credit_card.dart';
 

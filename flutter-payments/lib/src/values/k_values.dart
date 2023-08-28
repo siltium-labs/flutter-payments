@@ -39,3 +39,7 @@ const FontWeight kFontWeightRegular = FontWeight.w400;
 const FontWeight kFontWeightMedium = FontWeight.w400;
 const FontWeight kFontWeightSemibold = FontWeight.w400;
 const FontWeight kFontWeightBold = FontWeight.w700;
+
+const double webBreakPoint = 800;
+const double creditCardAspectRatio = 0.5714;
+const double creditCardPadding = 16;

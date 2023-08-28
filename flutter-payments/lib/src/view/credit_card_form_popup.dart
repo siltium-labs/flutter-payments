@@ -157,7 +157,7 @@ class _CreditCardFormPopupDialogState extends State<CreditCardFormPopupDialog> {
         left: 20,
         right: 20,
       ),
-      child: WidgetCardForm(
+      child: CardFormWidgets(
         context: widget.context,
         accessToken: widget.accessToken,
         themColor: widget.themColor,

@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import '../../flutter_payments.dart';
 import '../components/common/loading_popup.dart';
 import '../components/common/rounded_button_component.dart';
-import '../components/credit_card_brand.dart';
+import '../models/credit_card_brand.dart';
 import '../components/credit_card_form.dart';
-import '../components/credit_card_model.dart';
 import '../components/credit_card_widget.dart';
-import '../components/custom_card_type_icon.dart';
+import '../models/custom_card_type_icon.dart';
 import '../components/glassmorphism_config.dart';
+import '../models/credit_card_model.dart';
 import '../values/k_colors.dart';
 import '../values/k_values.dart';
 
-class WidgetCardForm extends StatefulWidget {
+class CardFormWidgets extends StatefulWidget {
   final BuildContext context;
   final String accessToken;
   final Color? themColor;
 
-  const WidgetCardForm({
+  const CardFormWidgets({
     super.key,
     required this.context,
     required this.accessToken,
@@ -25,10 +25,10 @@ class WidgetCardForm extends StatefulWidget {
   });
 
   @override
-  State<WidgetCardForm> createState() => _WidgetCardFormState();
+  State<CardFormWidgets> createState() => _CardFormWidgetsState();
 }
 
-class _WidgetCardFormState extends State<WidgetCardForm> {
+class _CardFormWidgetsState extends State<CardFormWidgets> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String cardNumber = '';
   String expiryDate = '';

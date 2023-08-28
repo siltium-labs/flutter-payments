@@ -7,8 +7,7 @@ import 'package:http/http.dart' as http;
 
 export 'src/models/mercado_pago/payment_result.dart';
 export 'src/components/common/loading_component.dart';
-export "src/view/credit_card_form_page.dart";
-export 'src/view/widget_card_form.dart';
+export 'src/view/card_form_widgets.dart';
 export 'src/view/credit_card_form_popup.dart';
 
 // Plugin class (with Method Channel) ------------------------------------------
