@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_payments/src/manager/data_manager.dart';
 
-import '../../flutter_payments.dart';
 import '../components/common/loading_popup.dart';
 import '../components/common/rounded_button_component.dart';
 import '../models/credit_card_brand.dart';
@@ -291,7 +291,7 @@ class _CardFormWidgetsState extends State<CardFormWidgets> {
       List<String> expDate = expiryDate.split("/");
       String month = expDate[0];
       String year = "20${expDate[1]}";
-      token = await FlutterPayments.getTokenCardMercadoPago(
+      token = await DataManager.getTokenCardMercadoPago(
         accessToken: widget.accessToken,
         documentType: documentType,
         documentNumber: documentNumber,
