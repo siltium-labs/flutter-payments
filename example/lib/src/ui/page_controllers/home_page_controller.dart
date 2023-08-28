@@ -173,12 +173,13 @@ class HomePageController extends ControllerMVC implements IViewController {
   }
 
   void payWithMercadoPagoManual() async {
-    String? tokenCardId = await FlutterPayments.payWithMercadoPagoManual(
+    Map<String, dynamic>? result =
+        await FlutterPayments.payWithMercadoPagoManual(
       context: PageManager().navigatorKey.currentContext!,
       accessToken: accessTokenTest,
       themeColor: kPrimary,
     );
 
-    print("Obtuve resultado: $tokenCardId");
+    print("Obtuve resultado: $result");
   }
 }

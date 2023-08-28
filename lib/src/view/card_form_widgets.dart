@@ -314,8 +314,68 @@ class _CardFormWidgetsState extends State<CardFormWidgets> {
 
   void _onResultData(String? tokenCardId) async {
     if (tokenCardId != null) {
-      print("Token Card: $tokenCardId");
-      Navigator.pop(widget.context, tokenCardId);
+      //print("Token Card: $tokenCardId");
+      //Navigator.pop(widget.context, tokenCardId);
+      await createCardPayment(tokenCard: tokenCardId);
+    } else {
+      Navigator.pop(widget.context);
+    }
+  }
+
+  Future<Map<String, dynamic>?> _createCardPayment({
+    required String tokenCard,
+    String type = "customer",
+  }) async {
+    Map<String, dynamic>? mapResult = await DataManager.createCardPayment(
+      accessToken: widget.accessToken,
+      tokenCard: tokenCard,
+      transactionAmount: 205000.5,
+      installments: 3,
+      firstName: "jorge",
+      lastName: "test",
+      email: "jmamani@siltium.com",
+      type: type,
+      identificationType: "DNI",
+      identificationNumber: "12345678",
+      zipCode: "1234",
+      streetName: "Calle",
+      streetNumber: "123",
+      neighborhood: "Barrio",
+      city: "Ciudad",
+      federalUnit: "1234",
+      description: "Es una descripcion test",
+    );
+
+    return mapResult;
+  }
+
+  Future<void> createCardPayment({
+    required String tokenCard,
+  }) async {
+    await LoadingPopup(
+      context: widget.context,
+      onLoading: _createCardPayment(
+        tokenCard: tokenCard,
+      ),
+      onError: (err) {
+        _onErrorCreateCardPayment(err);
+      },
+      onResult: (data) {
+        _onResultDataCreateCardPayment(data);
+      },
+    ).show();
+  }
+
+  void _onErrorCreateCardPayment(dynamic err) {
+    print("Error");
+    Navigator.pop(widget.context);
+  }
+
+  void _onResultDataCreateCardPayment(Map<String, dynamic>? mapResult) async {
+    if (mapResult != null) {
+      Navigator.pop(widget.context, mapResult);
+    } else {
+      Navigator.pop(widget.context);
     }
   }
 }

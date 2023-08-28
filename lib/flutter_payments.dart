@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_payments/src/manager/data_manager.dart';
 import 'flutter_payments.dart';
 
 export 'src/models/mercado_pago/payment_result.dart';
@@ -89,7 +90,7 @@ class FlutterPayments {
     return paymentResult;
   }
 
-  static Future<String?> payWithMercadoPagoManual({
+  static Future<Map<String, dynamic>?> payWithMercadoPagoManual({
     required BuildContext context,
     required String accessToken,
     Color? themeColor,
@@ -99,6 +100,26 @@ class FlutterPayments {
       accessToken: accessToken,
       themColor: themeColor,
     ).show();
+  }
+
+  static Future<String?> createPreferenceIdMercadoPago({
+    required String accessToken,
+    //body
+    required double title,
+    required int quantity,
+    String currencyId = "ARG",
+    required double unitPrice,
+    required String name,
+    required String email,
+  }) async {
+    return await DataManager.createPreferenceIdMercadoPago(
+      accessToken: accessToken,
+      title: title,
+      quantity: quantity,
+      unitPrice: unitPrice,
+      name: name,
+      email: email,
+    );
   }
 
   // MACRO
