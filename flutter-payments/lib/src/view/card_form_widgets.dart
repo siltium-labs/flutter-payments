@@ -51,6 +51,9 @@ class _CardFormWidgetsState extends State<CardFormWidgets> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
       child: Column(
         children: [
           Padding(
