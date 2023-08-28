@@ -6,7 +6,6 @@ import '../components/common/rounded_button_component.dart';
 import '../models/credit_card_brand.dart';
 import '../components/credit_card_form.dart';
 import '../components/credit_card_widget.dart';
-import '../models/custom_card_type_icon.dart';
 import '../components/glassmorphism_config.dart';
 import '../models/credit_card_model.dart';
 import '../values/k_colors.dart';
@@ -84,21 +83,10 @@ class _CardFormWidgetsState extends State<CardFormWidgets> {
               obscureCardNumber: true,
               obscureCardCvv: true,
               isHolderNameVisible: true,
-              //cardBgColor: cardBgColor,
               backgroundImage:
                   useBackgroundImage ? 'images/mercado_pago/card_bg.png' : null,
               isSwipeGestureEnabled: true,
               onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
-              customCardTypeIcons: [
-                CustomCardTypeIcon(
-                  cardType: CardType.mastercard,
-                  cardImage: Image.asset(
-                    'images/mercado_pago/mastercard.png',
-                    height: 48,
-                    width: 48,
-                  ),
-                ),
-              ],
             ),
           ),
           CreditCardForm(
@@ -310,7 +298,6 @@ class _CardFormWidgetsState extends State<CardFormWidgets> {
     await LoadingPopup(
       context: widget.context,
       onLoading: _getTokenCardMercadoPago(),
-      //onLoading: Future.delayed(const Duration(seconds: 1)),
       onError: (err) {
         _onError(err);
       },
