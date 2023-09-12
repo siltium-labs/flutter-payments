@@ -34,48 +34,21 @@ class _FlutterPaymentsChannel {
     ));
     return PaymentResult.fromJson(result!);
   }
-
-  // MACRO
-
-  // UALA
 }
 // End Plugin class (with Method Channel)---------------------------------------
 
 // Plugin class ----------------------------------------------------------------
 class FlutterPayments {
-  //String _publicKey = "YOUR KEY";
-  //String _preferenceId = "YOUR ID";
-
   static final FlutterPayments _instance = FlutterPayments._constructor();
   factory FlutterPayments() {
     return _instance;
   }
   FlutterPayments._constructor();
 
-  /* paymentsInit({
-    //GENERAL
-    required String publicKey,
-    required String preferenceId,
-  }) {
-    _publicKey = publicKey;
-    _preferenceId = preferenceId;
-  } */
-
   static Future<String?> get platformVersion async {
     String? version = await _FlutterPaymentsChannel.platformVersion;
     return version;
   }
-
-  /* payWithMercadoPago({
-    required PaymentMethodEnum paymentMethodEnum,
-  }) async {
-    switch (paymentMethodEnum) {
-      case PaymentMethodEnum.automatic:
-        break;
-      case PaymentMethodEnum.manual:
-        break;
-    }
-  } */
 
   // MERCADO PAGO
   static Future<PaymentResult> payWithMercadoPagoAutomatic({
@@ -121,9 +94,5 @@ class FlutterPayments {
       email: email,
     );
   }
-
-  // MACRO
-
-  // UALA
 }
 // End Plugin class ------------------------------------------------------------
