@@ -15,7 +15,7 @@ A new Flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'MercadoPagoSDK', '~> 4.32.4'
+  #s.dependency 'MercadoPagoSDK', '~> 4.32.4'
   s.dependency 'MLCardForm', '0.9.1'
   s.dependency 'MLCardDrawer', '1.5.0'
   s.platform = :ios, '11.0'

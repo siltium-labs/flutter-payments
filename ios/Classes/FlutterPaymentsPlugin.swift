@@ -22,7 +22,7 @@ public class FlutterPaymentsPlugin: NSObject, FlutterPlugin {
 
 import Flutter
 import UIKit
-import MercadoPagoSDK
+//import MercadoPagoSDK
 
 public class SwiftFlutterPaymentsPlugin: NSObject, FlutterPlugin, PXLifeCycleProtocol {
 
@@ -38,20 +38,20 @@ public class SwiftFlutterPaymentsPlugin: NSObject, FlutterPlugin, PXLifeCyclePro
     if (call.method == "getPlatformVersion") {
         result("iOS " + UIDevice.current.systemVersion)
     } else if (call.method == "startCheckoutWithMercadoPago") {
-        let args = call.arguments as! Dictionary<String, String>
+        /* let args = call.arguments as! Dictionary<String, String>
         let publicKey = args["publicKey"] ?? ""
         let preferenceId = args["preferenceId"] ?? ""
 
         pendingResult = result
 
-        startCheckoutWithMercadoPago(publicKey: publicKey, preferenceId: preferenceId)
+        startCheckoutWithMercadoPago(publicKey: publicKey, preferenceId: preferenceId) */
     } else {
-        handleNavigationBar(isMercadoPagoActive: false)
+        //handleNavigationBar(isMercadoPagoActive: false)
         result(FlutterMethodNotImplemented)
     }
   }
 
-  private func startCheckoutWithMercadoPago(publicKey: String, preferenceId: String) {
+  /* private func startCheckoutWithMercadoPago(publicKey: String, preferenceId: String) {
       let checkout = MercadoPago.init(builder: MercadoPagoBuilder.init(publicKey: publicKey, preferenceId: preferenceId))
 
       handleNavigationBar(isMercadoPagoActive: true)
@@ -110,6 +110,6 @@ public class SwiftFlutterPaymentsPlugin: NSObject, FlutterPlugin, PXLifeCyclePro
   private func controller() -> UINavigationController {
       let rootViewController = UIApplication.shared.keyWindow?.rootViewController
       return rootViewController as! UINavigationController
-  }
+  } */
 
 }
