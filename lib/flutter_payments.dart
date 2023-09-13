@@ -73,7 +73,6 @@ class FlutterPayments {
         preferenceId: preferenceId,
       );
     }
-    print(paymentResultModel);
 
     return paymentResultModel;
   }
