@@ -145,14 +145,14 @@ class HomePagePageState extends StateMVC<HomePage> {
                 ),
               ),
               child: const Text(
-                "Abrir Web",
+                "Abrir Mercado Pago Web",
                 style: TextStyle(
                   color: kWhite,
                   fontSize: kFontSize40,
                 ),
               ),
               onPressed: () {
-                _con.openWeb();
+                _con.payWithMercadoPagoWeb();
               },
             ),
             const SizedBox(height: 20),

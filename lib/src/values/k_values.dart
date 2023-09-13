@@ -1,16 +1,5 @@
 import 'package:flutter/material.dart';
 
-const String kPublicKeyTest = "TEST-81d8a608-abf0-4d87-8575-edee2427d378";
-const String kAccessTokenTest =
-    "TEST-1563356252471753-080709-33fb458ed3d3fc24b9d54032f0e045fd-222344382";
-
-const String kPublicKey = "APP_USR-52e7c6d8-6ae5-47af-b1e1-fbd422b5d330";
-const String kAccessToken =
-    "APP_USR-1563356252471753-080709-61d475382d74afc1a7ad54cd69a62465-222344382";
-
-const String kClientID = "1563356252471753";
-const String kClientSecret = "6I5qHQ3Dkc7Femb3WE0BXYD7qEay851J";
-
 // Tarjetas de pruebas Mercado Pago
 // https://www.mercadopago.com.ar/developers/es/docs/checkout-api/additional-content/your-integrations/test/cards
 

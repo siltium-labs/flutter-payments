@@ -29,13 +29,21 @@ class HomePageController extends ControllerMVC implements IViewController {
   // const preferenceId = "YOUR ID";
   // const accessTokenTest = "YOUR ACCESS TOKEN";
   String publicKeyTest = "TEST-81d8a608-abf0-4d87-8575-edee2427d378";
-  String preferenceIdTest = "222344382-b941a00f-b511-4e1d-bac5-d74f78586c09";
   String accessTokenTest =
       "TEST-1563356252471753-080709-33fb458ed3d3fc24b9d54032f0e045fd-222344382";
+  String? preferenceIDcreated;
 
   @override
-  void initPage({PageArgs? arguments}) {
+  void initPage({PageArgs? arguments}) async {
     initPlatformState();
+    preferenceIDcreated = await FlutterPayments.createPreferenceIdMercadoPago(
+      accessToken: accessTokenTest,
+      title: "Producto Test",
+      quantity: 1,
+      unitPrice: 3500.52,
+      name: "Jorge Test",
+      email: "jmamani@siltium.com",
+    );
   }
 
   @override
@@ -91,7 +99,8 @@ class HomePageController extends ControllerMVC implements IViewController {
     PaymentResult paymentResult =
         await FlutterPayments.payWithMercadoPagoAutomatic(
       publicKey: publicKeyTest,
-      preferenceId: preferenceIdTest,
+      //preferenceId: preferenceIdTest,
+      preferenceId: preferenceIDcreated!,
     );
 
     if (paymentResult.errorMessage != null) {
@@ -157,20 +166,11 @@ class HomePageController extends ControllerMVC implements IViewController {
     print("preferenceID: $preferenceID");
   }
 
-  void openWeb() async {
-    String? preferenceID = await FlutterPayments.createPreferenceIdMercadoPago(
-      accessToken: accessTokenTest,
-      title: "Producto Test",
-      quantity: 1,
-      unitPrice: 3500.52,
-      name: "Jorge Test",
-      email: "jmamani@siltium.com",
-    );
-
-    if (preferenceID != null && preferenceID.isNotEmpty) {
+  void payWithMercadoPagoWeb() async {
+    if (preferenceIDcreated != null && preferenceIDcreated!.isNotEmpty) {
       FlutterPayments.payWithMercadoPagoWeb(
         context: PageManager().navigatorKey.currentContext!,
-        preferenceId: preferenceID,
+        preferenceId: preferenceIDcreated!,
       );
     }
   }

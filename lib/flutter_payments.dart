@@ -85,12 +85,15 @@ class FlutterPayments {
       MaterialPageRoute(
         builder: (context) => WebViewPage(
           Uri.parse(
-            //"https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=1234567890",
             "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=${preferenceId}",
           ),
         ),
       ),
-    );
+    ).then((value) {
+      if (value != null) {
+        print("Obtuve valor:\n${value.toString()}");
+      }
+    });
   }
 
   static Future<String?> createPreferenceIdMercadoPago({

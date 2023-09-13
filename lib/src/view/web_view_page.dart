@@ -1,6 +1,3 @@
-// ignore_for_file: unnecessary_string_escapes
-
-//import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_payments/src/values/k_colors.dart';
@@ -34,12 +31,13 @@ class WebViewPageState extends StateMVC<WebViewPage> {
 
   @override
   Widget build(BuildContext context) {
+    _con.context = context;
     return SafeArea(
       child: WillPopScope(
         onWillPop: () => _con.onBack(context),
         child: Scaffold(
           backgroundColor: kWhite,
-          appBar: AppBar(
+          /* appBar: AppBar(
             backgroundColor: kPrimary,
             elevation: 0,
             // title: const Text("CPACF Web"),
@@ -52,7 +50,7 @@ class WebViewPageState extends StateMVC<WebViewPage> {
                 color: kWhite,
               ),
             ),
-          ),
+          ), */
           body: Stack(
             children: [
               WebViewWidget(controller: _con.webViewController),

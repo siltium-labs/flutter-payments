@@ -20,9 +20,13 @@ class WebViewPageController extends ControllerMVC implements IViewController {
   //InAppWebViewController? webViewController;
   late WebViewController webViewController;
   Uri? url;
+  late BuildContext context;
+  Map<String, dynamic> result = {};
 
   @override
-  void initPage({Uri? url}) {
+  void initPage({
+    Uri? url,
+  }) {
     this.url = url;
     String lineas = "-" * 20;
     webViewController = WebViewController()
@@ -32,23 +36,39 @@ class WebViewPageController extends ControllerMVC implements IViewController {
         NavigationDelegate(
           onProgress: (int progress) {
             // Update loading bar.
-            print(progress);
+            //print(progress);
           },
           onPageStarted: (String url) {
-            print("\n${lineas}\nURL START: ${url}\n${lineas}\n\n");
+            //print("\n${lineas}\nURL START: ${url}\n${lineas}\n\n");
           },
           onPageFinished: (String url) {
-            print("\n${lineas}\nURL FINISH: ${url}\n${lineas}\n\n");
+            //print("\n${lineas}\nURL FINISH: ${url}\n${lineas}\n\n");
           },
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
+            print("\n${lineas}\nURL REQUEST: ${request.url}\n${lineas}\n\n");
+
+            if (request.url.startsWith("https://www.example.com/")) {
+              String backURL = request.url;
+              backURL = backURL.replaceAll("https://www.example.com/", "");
+              int pos = backURL.indexOf("?");
+              if (pos != -1) {
+                List<String> statusAndBody = backURL.split("?");
+                String status = statusAndBody[0];
+                result["statusURL"] = status;
+                backURL = backURL.substring(pos + 1);
+                for (String elementString in backURL.split("&")) {
+                  List<String> element = elementString.split("=");
+                  result[element[0]] = element[1];
+                }
+              }
+              onBack(context);
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;
           },
           onUrlChange: (change) {
-            print("\n${lineas}\nURL CHANGE: ${change.url}\n${lineas}\n\n");
+            //print("\n${lineas}\nURL CHANGE: ${change.url}\n${lineas}\n\n");
           },
         ),
       )
@@ -77,7 +97,7 @@ class WebViewPageController extends ControllerMVC implements IViewController {
   } */
 
   Future<bool> onBack(BuildContext context) async {
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(result.isNotEmpty ? result : null);
     return false;
   }
 
