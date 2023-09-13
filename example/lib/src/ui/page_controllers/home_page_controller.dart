@@ -97,6 +97,13 @@ class HomePageController extends ControllerMVC implements IViewController {
         description: "Pago aprobado",
         labelAccept: "Ok",
       );
+    } else if (paymentResultModel.status == "in_process") {
+      //print("Pago pendiente");
+      await PageManager().openDefaultAlertPopup(
+        title: "Mercado Pago",
+        description: "Pago pendiente",
+        labelAccept: "Ok",
+      );
     }
   }
 
@@ -152,7 +159,7 @@ class HomePageController extends ControllerMVC implements IViewController {
         preferenceId: preferenceIDcreated!,
       );
 
-      //_showResult(paymentResultModel);
+      _showResult(paymentResultModel);
     }
   }
 }

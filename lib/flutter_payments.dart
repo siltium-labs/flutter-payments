@@ -95,7 +95,7 @@ class FlutterPayments {
     required String preferenceId,
   }) async {
     try {
-      await Navigator.push(
+      dynamic value = await Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => WebViewPage(
@@ -104,19 +104,22 @@ class FlutterPayments {
             ),
           ),
         ),
-      ).then((value) async {
-        if (value != null) {
-          Map<String, dynamic> result = value!;
-          PaymentResultWebModel paymentResultWeb =
-              PaymentResultWebModel.fromJson(result);
+      );
 
+      if (value != null) {
+        Map<String, dynamic> result = value!;
+        PaymentResultWebModel paymentResultWeb =
+            PaymentResultWebModel.fromJson(result);
+
+        if (paymentResultWeb.status != null) {
           return PaymentResultModel(
             result: "done",
             status: paymentResultWeb.status,
           );
+        }
 
-          // Automatic APRO
-          /*
+        // Automatic APRO
+        /*
           captured: null
           errorMessage: null
           id: 1314782092
@@ -132,8 +135,8 @@ class FlutterPayments {
           transactionAmount: "3500.52"
           */
 
-          // Automatic OTHE
-          /*
+        // Automatic OTHE
+        /*
           captured: null
           errorMessage: null
           id: 1314784246
@@ -149,8 +152,8 @@ class FlutterPayments {
           transactionAmount: "3500.52" 
           */
 
-          // Automatic CONT
-          /*
+        // Automatic CONT
+        /*
           captured: null
           errorMessage: null
           id: 1314784334
@@ -165,8 +168,7 @@ class FlutterPayments {
           statusDetail: "pending_contingency"
           transactionAmount: "3500.52" 
           */
-        }
-      });
+      }
     } catch (e) {
       return PaymentResultModel(
         result: "canceled",

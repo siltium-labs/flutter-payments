@@ -22,6 +22,7 @@ class WebViewPageController extends ControllerMVC implements IViewController {
   Uri? url;
   late BuildContext context;
   Map<String, dynamic> result = {};
+  String lastURL = "";
 
   @override
   void initPage({
@@ -59,7 +60,7 @@ class WebViewPageController extends ControllerMVC implements IViewController {
                 backURL = backURL.substring(pos + 1);
                 for (String elementString in backURL.split("&")) {
                   List<String> element = elementString.split("=");
-                  result[element[0]] = element[1];
+                  result[element[0]] = element[1] == "null" ? null : element[1];
                 }
               }
               onBack(context);
@@ -68,7 +69,8 @@ class WebViewPageController extends ControllerMVC implements IViewController {
             return NavigationDecision.navigate;
           },
           onUrlChange: (change) {
-            //print("\n${lineas}\nURL CHANGE: ${change.url}\n${lineas}\n\n");
+            print("\n${lineas}\nURL CHANGE: ${change.url}\n${lineas}\n\n");
+            lastURL = change.url ?? "";
           },
         ),
       )
@@ -97,6 +99,16 @@ class WebViewPageController extends ControllerMVC implements IViewController {
   } */
 
   Future<bool> onBack(BuildContext context) async {
+    if (lastURL.contains("/congrats/approved")) {
+      result["status"] = "approved";
+    }
+    if (lastURL.contains("/congrats/rejected")) {
+      result["status"] = "rejected";
+    }
+    if (lastURL.contains("/congrats/recover/contingency")) {
+      result["status"] = "in_process";
+    }
+
     Navigator.of(context).pop(result.isNotEmpty ? result : null);
     return false;
   }
