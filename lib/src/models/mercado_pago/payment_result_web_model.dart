@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
-class PaymentResultWeb {
+class PaymentResultWebModel {
   String? statusURL;
   String? collection_id;
   String? collection_status;
@@ -14,7 +14,7 @@ class PaymentResultWeb {
   String? processing_mode;
   String? merchant_account_id;
 
-  PaymentResultWeb.fromJson(Map<String, dynamic> json) {
+  PaymentResultWebModel.fromJson(Map<String, dynamic> json) {
     statusURL = json["statusURL"];
     collection_id = json["collection_id"];
     collection_status = json["collection_status"];

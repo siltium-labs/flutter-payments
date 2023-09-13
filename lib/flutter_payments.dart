@@ -2,11 +2,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_payments/src/manager/data_manager.dart';
-import 'package:flutter_payments/src/models/mercado_pago/payment_result_web.dart';
+import 'package:flutter_payments/src/models/mercado_pago/payment_result_web_model.dart';
 import 'package:flutter_payments/src/view/web_view_page.dart';
 import 'flutter_payments.dart';
 
-export 'src/models/mercado_pago/payment_result.dart';
+export 'src/models/mercado_pago/payment_result_model.dart';
 export 'src/components/common/loading_component.dart';
 export 'src/view/card_form_widgets.dart';
 export 'src/view/credit_card_form_popup.dart';
@@ -22,7 +22,7 @@ class _FlutterPaymentsChannel {
   }
 
   // MERCADO PAGO
-  static Future<PaymentResult> payWithMercadoPagoCheckout({
+  static Future<PaymentResultModel> payWithMercadoPagoCheckout({
     required String publicKey,
     required String preferenceId,
   }) async {
@@ -34,7 +34,7 @@ class _FlutterPaymentsChannel {
         "preferenceId": preferenceId,
       },
     ));
-    return PaymentResult.fromJson(result!);
+    return PaymentResultModel.fromJson(result!);
   }
 }
 // End Plugin class (with Method Channel)---------------------------------------
@@ -53,27 +53,29 @@ class FlutterPayments {
   }
 
   // MERCADO PAGO
-  static Future<PaymentResult> payWithMercadoPagoAutomatic({
+  static Future<PaymentResultModel> payWithMercadoPagoAutomatic({
     required BuildContext context,
     required String publicKey,
     required String preferenceId,
   }) async {
     String? version = await platformVersion;
-    PaymentResult paymentResult;
+    PaymentResultModel paymentResultModel;
     if (version != null && version.toLowerCase().trim().contains("android")) {
-      paymentResult = await _FlutterPaymentsChannel.payWithMercadoPagoCheckout(
+      paymentResultModel =
+          await _FlutterPaymentsChannel.payWithMercadoPagoCheckout(
         publicKey: publicKey,
         preferenceId: preferenceId,
       );
     } else {
       // ignore: use_build_context_synchronously
-      paymentResult = await payWithMercadoPagoWeb(
+      paymentResultModel = await payWithMercadoPagoWeb(
         context: context,
         preferenceId: preferenceId,
       );
     }
+    print(paymentResultModel);
 
-    return paymentResult;
+    return paymentResultModel;
   }
 
   static Future<Map<String, dynamic>?> payWithMercadoPagoManual({
@@ -88,12 +90,12 @@ class FlutterPayments {
     ).show();
   }
 
-  static Future<PaymentResult> payWithMercadoPagoWeb({
+  static Future<PaymentResultModel> payWithMercadoPagoWeb({
     required BuildContext context,
     required String preferenceId,
   }) async {
     try {
-      Navigator.push(
+      await Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => WebViewPage(
@@ -102,28 +104,16 @@ class FlutterPayments {
             ),
           ),
         ),
-      ).then((value) {
+      ).then((value) async {
         if (value != null) {
           Map<String, dynamic> result = value!;
-          PaymentResultWeb paymentResultWeb = PaymentResultWeb.fromJson(result);
-          return const PaymentResult(
-            "done",
+          PaymentResultWebModel paymentResultWeb =
+              PaymentResultWebModel.fromJson(result);
+
+          return PaymentResultModel(
+            result: "done",
+            status: paymentResultWeb.status,
           );
-          /*
-          json['result'] as String,
-          json['id'] as int?,
-          json['status'] as String?,
-          json['statusDetail'] as String?,
-          json['paymentMethodId'] as String?,
-          json['paymentTypeId'] as String?,
-          json['issuerId'] as String?,
-          json['installments'] as int?,
-          json['captured'] as bool?,
-          json['liveMode'] as bool?,
-          json['operationType'] as String?,
-          json['transactionAmount'] as String?,
-          json['errorMessage'] as String?,
-          */
 
           // Automatic APRO
           /*
@@ -178,10 +168,13 @@ class FlutterPayments {
         }
       });
     } catch (e) {
-      return const PaymentResult("canceled");
+      return PaymentResultModel(
+        result: "canceled",
+        errorMessage: e.toString(),
+      );
     }
 
-    return const PaymentResult("canceled");
+    return PaymentResultModel(result: "canceled");
   }
 
   static Future<String?> createPreferenceIdMercadoPago({

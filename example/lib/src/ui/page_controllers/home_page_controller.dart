@@ -6,7 +6,6 @@ import 'dart:async';
 
 import '../../interfaces/i_view_controller.dart';
 import '../../managers/page_manager.dart';
-import '../../utils/functions_utils.dart';
 import '../../utils/page_args.dart';
 import '../popups/loading_popup.dart';
 
@@ -69,63 +68,29 @@ class HomePageController extends ControllerMVC implements IViewController {
     });
   }
 
-  Future<void> getPreferenceId() async {
-    await Future.delayed(const Duration(seconds: 2));
-  }
-
-  void pay() async {
-    await LoadingPopup(
-      context: PageManager().navigatorKey.currentContext!,
-      onLoading: getPreferenceId(),
-      onError: (err) {
-        _onError(err);
-      },
-      onResult: (data) {
-        _onResultData(data);
-      },
-    ).show();
-  }
-
-  void _onError(dynamic err) {
-    showToast(
-      context: PageManager().navigatorKey.currentContext!,
-      message: "Error",
-    );
-  }
-
-  void _onResultData(dynamic data) async {}
-
-  void payWithMercadoPagoAutomatic() async {
-    PaymentResult paymentResult =
-        await FlutterPayments.payWithMercadoPagoAutomatic(
-      context: PageManager().navigatorKey.currentContext!,
-      publicKey: publicKeyTest,
-      //preferenceId: preferenceIdTest,
-      preferenceId: preferenceIDcreated!,
-    );
-
-    if (paymentResult.errorMessage != null) {
+  void _showResult(PaymentResultModel paymentResultModel) async {
+    if (paymentResultModel.errorMessage != null) {
       //print("Pago Error: ${paymentResult.errorMessage}");
       await PageManager().openDefaultAlertPopup(
         title: "Mercado Pago",
-        description: "Pago error: ${paymentResult.errorMessage}",
+        description: "Pago error: ${paymentResultModel.errorMessage}",
         labelAccept: "Ok",
       );
-    } else if (paymentResult.result.toLowerCase() == "canceled") {
+    } else if (paymentResultModel.result.toLowerCase() == "canceled") {
       //print("Pago Cancelado");
       await PageManager().openDefaultAlertPopup(
         title: "Mercado Pago",
         description: "Pago cancelado",
         labelAccept: "Ok",
       );
-    } else if (paymentResult.status == "rejected") {
+    } else if (paymentResultModel.status == "rejected") {
       //print("Pago Rechazado");
       await PageManager().openDefaultAlertPopup(
         title: "Mercado Pago",
         description: "Pago rechazado",
         labelAccept: "Ok",
       );
-    } else if (paymentResult.status == "approved") {
+    } else if (paymentResultModel.status == "approved") {
       //print("Pago Aprobado");
       await PageManager().openDefaultAlertPopup(
         title: "Mercado Pago",
@@ -133,6 +98,18 @@ class HomePageController extends ControllerMVC implements IViewController {
         labelAccept: "Ok",
       );
     }
+  }
+
+  void payWithMercadoPagoAutomatic() async {
+    PaymentResultModel paymentResultModel =
+        await FlutterPayments.payWithMercadoPagoAutomatic(
+      context: PageManager().navigatorKey.currentContext!,
+      publicKey: publicKeyTest,
+      //preferenceId: preferenceIdTest,
+      preferenceId: preferenceIDcreated!,
+    );
+
+    _showResult(paymentResultModel);
   }
 
   void payWithMercadoPagoManual() async {
@@ -169,10 +146,13 @@ class HomePageController extends ControllerMVC implements IViewController {
 
   void payWithMercadoPagoWeb() async {
     if (preferenceIDcreated != null && preferenceIDcreated!.isNotEmpty) {
-      FlutterPayments.payWithMercadoPagoWeb(
+      PaymentResultModel paymentResultModel =
+          await FlutterPayments.payWithMercadoPagoWeb(
         context: PageManager().navigatorKey.currentContext!,
         preferenceId: preferenceIDcreated!,
       );
+
+      //_showResult(paymentResultModel);
     }
   }
 }
