@@ -98,6 +98,7 @@ class HomePageController extends ControllerMVC implements IViewController {
   void payWithMercadoPagoAutomatic() async {
     PaymentResult paymentResult =
         await FlutterPayments.payWithMercadoPagoAutomatic(
+      context: PageManager().navigatorKey.currentContext!,
       publicKey: publicKeyTest,
       //preferenceId: preferenceIdTest,
       preferenceId: preferenceIDcreated!,

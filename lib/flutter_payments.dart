@@ -53,14 +53,25 @@ class FlutterPayments {
 
   // MERCADO PAGO
   static Future<PaymentResult> payWithMercadoPagoAutomatic({
+    required BuildContext context,
     required String publicKey,
     required String preferenceId,
   }) async {
-    PaymentResult paymentResult =
-        await _FlutterPaymentsChannel.payWithMercadoPagoCheckout(
-      publicKey: publicKey,
-      preferenceId: preferenceId,
-    );
+    String? version = await platformVersion;
+    PaymentResult paymentResult;
+    if (version != null && version.toLowerCase().trim().contains("android")) {
+      paymentResult = await _FlutterPaymentsChannel.payWithMercadoPagoCheckout(
+        publicKey: publicKey,
+        preferenceId: preferenceId,
+      );
+    } else {
+      // ignore: use_build_context_synchronously
+      paymentResult = await payWithMercadoPagoWeb(
+        context: context,
+        preferenceId: preferenceId,
+      );
+    }
+
     return paymentResult;
   }
 
@@ -76,24 +87,47 @@ class FlutterPayments {
     ).show();
   }
 
-  static Future<void> payWithMercadoPagoWeb({
+  static Future<PaymentResult> payWithMercadoPagoWeb({
     required BuildContext context,
     required String preferenceId,
   }) async {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => WebViewPage(
-          Uri.parse(
-            "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=${preferenceId}",
+    try {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => WebViewPage(
+            Uri.parse(
+              "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=${preferenceId}",
+            ),
           ),
         ),
-      ),
-    ).then((value) {
-      if (value != null) {
-        print("Obtuve valor:\n${value.toString()}");
-      }
-    });
+      ).then((value) {
+        if (value != null) {
+          Map<String, dynamic> result = value!;
+          //print("Obtuve valor:\n${value.toString()}");
+          return const PaymentResult(
+            "apro",
+          );
+          /*
+          json['result'] as String,
+          json['id'] as int?,
+          json['status'] as String?,
+          json['statusDetail'] as String?,
+          json['paymentMethodId'] as String?,
+          json['paymentTypeId'] as String?,
+          json['issuerId'] as String?,
+          json['installments'] as int?,
+          json['captured'] as bool?,
+          json['liveMode'] as bool?,
+          json['operationType'] as String?,
+          json['transactionAmount'] as String?,
+          json['errorMessage'] as String?,
+          */
+        }
+      });
+    } catch (e) {}
+
+    return const PaymentResult("canceled");
   }
 
   static Future<String?> createPreferenceIdMercadoPago({
