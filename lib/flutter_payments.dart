@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_payments/src/manager/data_manager.dart';
+import 'package:flutter_payments/src/models/mercado_pago/payment_result_web.dart';
 import 'package:flutter_payments/src/view/web_view_page.dart';
 import 'flutter_payments.dart';
 
@@ -104,9 +105,9 @@ class FlutterPayments {
       ).then((value) {
         if (value != null) {
           Map<String, dynamic> result = value!;
-          //print("Obtuve valor:\n${value.toString()}");
+          PaymentResultWeb paymentResultWeb = PaymentResultWeb.fromJson(result);
           return const PaymentResult(
-            "apro",
+            "done",
           );
           /*
           json['result'] as String,
@@ -123,9 +124,62 @@ class FlutterPayments {
           json['transactionAmount'] as String?,
           json['errorMessage'] as String?,
           */
+
+          // Automatic APRO
+          /*
+          captured: null
+          errorMessage: null
+          id: 1314782092
+          installments: 1
+          issuerId: null
+          liveMode: null
+          operationType: "regular_payment"
+          paymentMethodId: "visa"
+          paymentTypeId: "credit_card"
+          result: "done"
+          status: "approved"
+          statusDetail:"accredited"
+          transactionAmount: "3500.52"
+          */
+
+          // Automatic OTHE
+          /*
+          captured: null
+          errorMessage: null
+          id: 1314784246
+          installments: 2
+          issuerId: null
+          liveMode: null
+          operationType: "regular_payment"
+          paymentMethodId: "visa"
+          paymentTypeId: "credit_card"
+          result: "done"
+          status: "rejected"
+          statusDetail: "cc_rejected_other_reason"
+          transactionAmount: "3500.52" 
+          */
+
+          // Automatic CONT
+          /*
+          captured: null
+          errorMessage: null
+          id: 1314784334
+          installments: 3
+          issuerId: null
+          liveMode: null
+          operationType: "regular_payment"
+          paymentMethodId: "visa"
+          paymentTypeId: "credit_card"
+          result: "done"
+          status: "in_process"
+          statusDetail: "pending_contingency"
+          transactionAmount: "3500.52" 
+          */
         }
       });
-    } catch (e) {}
+    } catch (e) {
+      return const PaymentResult("canceled");
+    }
 
     return const PaymentResult("canceled");
   }
