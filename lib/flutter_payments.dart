@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_payments/src/manager/data_manager.dart';
+import 'package:flutter_payments/src/view/web_view_page.dart';
 import 'flutter_payments.dart';
 
 export 'src/models/mercado_pago/payment_result.dart';
@@ -73,6 +74,23 @@ class FlutterPayments {
       accessToken: accessToken,
       themColor: themeColor,
     ).show();
+  }
+
+  static Future<void> payWithMercadoPagoWeb({
+    required BuildContext context,
+    required String preferenceId,
+  }) async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => WebViewPage(
+          Uri.parse(
+            //"https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=1234567890",
+            "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=${preferenceId}",
+          ),
+        ),
+      ),
+    );
   }
 
   static Future<String?> createPreferenceIdMercadoPago({

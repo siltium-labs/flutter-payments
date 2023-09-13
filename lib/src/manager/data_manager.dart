@@ -145,6 +145,11 @@ class DataManager {
             //{"id": "debit_card"},
           ],
         },
+        "back_urls": {
+          "success": "https://www.example.com/success",
+          "pending": "https://www.example.com/pending",
+          "failure": "https://www.example.com/failure"
+        }
       },
     );
     final response = await http.post(

@@ -156,4 +156,22 @@ class HomePageController extends ControllerMVC implements IViewController {
 
     print("preferenceID: $preferenceID");
   }
+
+  void openWeb() async {
+    String? preferenceID = await FlutterPayments.createPreferenceIdMercadoPago(
+      accessToken: accessTokenTest,
+      title: "Producto Test",
+      quantity: 1,
+      unitPrice: 3500.52,
+      name: "Jorge Test",
+      email: "jmamani@siltium.com",
+    );
+
+    if (preferenceID != null && preferenceID.isNotEmpty) {
+      FlutterPayments.payWithMercadoPagoWeb(
+        context: PageManager().navigatorKey.currentContext!,
+        preferenceId: preferenceID,
+      );
+    }
+  }
 }
