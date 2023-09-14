@@ -1,5 +1,6 @@
 //import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_payments/src/enums/payment_gateways_enum.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -20,6 +21,7 @@ class WebViewPageController extends ControllerMVC implements IViewController {
   //InAppWebViewController? webViewController;
   late WebViewController webViewController;
   Uri? url;
+  late PaymentGatewaysEnum paymentGatewaysEnum;
   late BuildContext context;
   Map<String, dynamic> result = {};
   String lastURL = "";
@@ -27,9 +29,13 @@ class WebViewPageController extends ControllerMVC implements IViewController {
   @override
   void initPage({
     Uri? url,
+    PaymentGatewaysEnum paymentGatewaysEnum = PaymentGatewaysEnum.mercadopago,
   }) {
     this.url = url;
+    this.paymentGatewaysEnum = paymentGatewaysEnum;
+
     String lineas = "-" * 20;
+
     webViewController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
@@ -49,23 +55,8 @@ class WebViewPageController extends ControllerMVC implements IViewController {
           onNavigationRequest: (NavigationRequest request) {
             print("\n${lineas}\nURL REQUEST: ${request.url}\n${lineas}\n\n");
 
-            if (request.url.startsWith("https://www.example.com/")) {
-              String backURL = request.url;
-              backURL = backURL.replaceAll("https://www.example.com/", "");
-              int pos = backURL.indexOf("?");
-              if (pos != -1) {
-                List<String> statusAndBody = backURL.split("?");
-                String status = statusAndBody[0];
-                result["statusURL"] = status;
-                backURL = backURL.substring(pos + 1);
-                for (String elementString in backURL.split("&")) {
-                  List<String> element = elementString.split("=");
-                  result[element[0]] = element[1] == "null" ? null : element[1];
-                }
-              }
-              onBack(context);
-              return NavigationDecision.prevent;
-            }
+            _onNavigationRequest(request);
+
             return NavigationDecision.navigate;
           },
           onUrlChange: (change) {
@@ -99,22 +90,72 @@ class WebViewPageController extends ControllerMVC implements IViewController {
   } */
 
   Future<bool> onBack(BuildContext context) async {
-    if (lastURL.contains("/congrats/approved")) {
-      result["status"] = "approved";
-    }
-    if (lastURL.contains("/congrats/rejected")) {
-      result["status"] = "rejected";
-    }
-    if (lastURL.contains("/congrats/recover/contingency")) {
-      result["status"] = "in_process";
-    }
+    _onBackConditions();
 
     Navigator.of(context).pop(result.isNotEmpty ? result : null);
     return false;
   }
 
+  void _onBackConditions() {
+    switch (paymentGatewaysEnum) {
+      case PaymentGatewaysEnum.mercadopago:
+        if (lastURL.contains("/congrats/approved")) {
+          result["status"] = "approved";
+        }
+        if (lastURL.contains("/congrats/rejected")) {
+          result["status"] = "rejected";
+        }
+        if (lastURL.contains("/congrats/recover/contingency")) {
+          result["status"] = "in_process";
+        }
+        break;
+      case PaymentGatewaysEnum.totalcoin:
+        break;
+    }
+  }
+
   setLoading(bool load) {
     isLoading = load;
     setState(() {});
+  }
+
+  _onNavigationRequest(NavigationRequest request) {
+    switch (paymentGatewaysEnum) {
+      case PaymentGatewaysEnum.mercadopago:
+        if (request.url.startsWith("https://www.example.com/")) {
+          String backURL = request.url;
+          backURL = backURL.replaceAll("https://www.example.com/", "");
+          int pos = backURL.indexOf("?");
+          if (pos != -1) {
+            List<String> statusAndBody = backURL.split("?");
+            String status = statusAndBody[0];
+            result["statusURL"] = status;
+            backURL = backURL.substring(pos + 1);
+            for (String elementString in backURL.split("&")) {
+              List<String> element = elementString.split("=");
+              result[element[0]] = element[1] == "null" ? null : element[1];
+            }
+          } else {
+            result["status"] = backURL == "success" ? "approved" : null;
+          }
+          onBack(context);
+          return NavigationDecision.prevent;
+        }
+        break;
+
+      case PaymentGatewaysEnum.totalcoin:
+        if (request.url.startsWith("https://www.example.com/")) {
+          String backURL = request.url;
+          backURL = backURL.replaceAll("https://www.example.com/", "");
+          result["status"] = backURL == "success" ? "approved" : null;
+          onBack(context);
+          return NavigationDecision.prevent;
+        }
+        if (request.url == "https://test.totalcoin.com/") {
+          onBack(context);
+          return NavigationDecision.prevent;
+        }
+        break;
+    }
   }
 }

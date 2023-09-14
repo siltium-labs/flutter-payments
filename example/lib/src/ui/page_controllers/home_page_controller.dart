@@ -162,4 +162,16 @@ class HomePageController extends ControllerMVC implements IViewController {
       _showResult(paymentResultModel);
     }
   }
+
+  void payWithTotalCoinWeb() async {
+    if (preferenceIDcreated != null && preferenceIDcreated!.isNotEmpty) {
+      PaymentResultModel paymentResultModel =
+          await FlutterPayments.payWithTotalCoinWeb(
+        context: PageManager().navigatorKey.currentContext!,
+        preferenceId: "asdad",
+      );
+
+      _showResult(paymentResultModel);
+    }
+  }
 }

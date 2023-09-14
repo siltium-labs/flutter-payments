@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_payments/src/enums/payment_gateways_enum.dart';
 import 'package:flutter_payments/src/manager/data_manager.dart';
 import 'package:flutter_payments/src/models/mercado_pago/payment_result_web_model.dart';
 import 'package:flutter_payments/src/view/web_view_page.dart';
@@ -98,8 +99,9 @@ class FlutterPayments {
         context,
         MaterialPageRoute(
           builder: (context) => WebViewPage(
-            Uri.parse(
-              "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=${preferenceId}",
+            paymentGatewaysEnum: PaymentGatewaysEnum.mercadopago,
+            url: Uri.parse(
+              "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=$preferenceId",
             ),
           ),
         ),
@@ -196,6 +198,47 @@ class FlutterPayments {
       name: name,
       email: email,
     );
+  }
+
+  // TOTAL COIN
+
+  static Future<PaymentResultModel> payWithTotalCoinWeb({
+    required BuildContext context,
+    required String preferenceId,
+  }) async {
+    try {
+      dynamic value = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => WebViewPage(
+            paymentGatewaysEnum: PaymentGatewaysEnum.totalcoin,
+            url: Uri.parse(
+              "https://test.totalcoin.com/workspace/checkout/receptor?requestId=$preferenceId",
+            ),
+          ),
+        ),
+      );
+
+      if (value != null) {
+        Map<String, dynamic> result = value!;
+        PaymentResultWebModel paymentResultWeb =
+            PaymentResultWebModel.fromJson(result);
+
+        if (paymentResultWeb.status != null) {
+          return PaymentResultModel(
+            result: "done",
+            status: paymentResultWeb.status,
+          );
+        }
+      }
+    } catch (e) {
+      return PaymentResultModel(
+        result: "canceled",
+        errorMessage: e.toString(),
+      );
+    }
+
+    return PaymentResultModel(result: "canceled");
   }
 }
 // End Plugin class ------------------------------------------------------------

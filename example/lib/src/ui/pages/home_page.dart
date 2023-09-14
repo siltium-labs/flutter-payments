@@ -156,6 +156,29 @@ class HomePagePageState extends StateMVC<HomePage> {
               },
             ),
             const SizedBox(height: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 25,
+                  vertical: 10,
+                ),
+                backgroundColor: kPrimary,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+              ),
+              child: const Text(
+                "Abrir Total Coin Web",
+                style: TextStyle(
+                  color: kWhite,
+                  fontSize: kFontSize40,
+                ),
+              ),
+              onPressed: () {
+                _con.payWithTotalCoinWeb();
+              },
+            ),
+            const SizedBox(height: 20),
           ],
         ),
       ),

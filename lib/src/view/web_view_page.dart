@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_payments/src/enums/payment_gateways_enum.dart';
 //import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_payments/src/values/k_colors.dart';
 import 'package:flutter_payments/src/view/web_view_page_controller.dart';
@@ -8,9 +9,11 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../components/common/loading_component.dart';
 
 class WebViewPage extends StatefulWidget {
-  final Uri? url;
-  const WebViewPage(
-    this.url, {
+  final Uri url;
+  final PaymentGatewaysEnum paymentGatewaysEnum;
+  const WebViewPage({
+    required this.url,
+    required this.paymentGatewaysEnum,
     Key? key,
   }) : super(key: key);
   @override
@@ -25,7 +28,10 @@ class WebViewPageState extends StateMVC<WebViewPage> {
   }
   @override
   void initState() {
-    _con.initPage(url: widget.url);
+    _con.initPage(
+      url: widget.url,
+      paymentGatewaysEnum: widget.paymentGatewaysEnum,
+    );
     super.initState();
   }
 
