@@ -14,7 +14,8 @@ Plugin para incluir en proyectos mobile de Siltium, permite realizar pagos usand
 
 **0.2.0**
 <br>
-- Realizar pagos en MercadoPago por medio de un WebView, realizar pagos por medio de TotalCoin.
+- Realizar pagos en MercadoPago por medio de un WebView usando Checkout PRO
+- Realizar pagos por medio de TotalCoin.
 <br>
 <br>
 
