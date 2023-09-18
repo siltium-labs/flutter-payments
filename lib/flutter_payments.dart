@@ -194,6 +194,7 @@ class FlutterPayments {
       accessToken: accessToken,
       title: title,
       quantity: quantity,
+      currencyId: currencyId,
       unitPrice: unitPrice,
       name: name,
       email: email,

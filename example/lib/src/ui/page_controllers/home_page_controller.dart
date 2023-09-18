@@ -168,7 +168,7 @@ class HomePageController extends ControllerMVC implements IViewController {
       PaymentResultModel paymentResultModel =
           await FlutterPayments.payWithTotalCoinWeb(
         context: PageManager().navigatorKey.currentContext!,
-        preferenceId: "cf379b11-6c68-4ad5-ac08-af494a639a75",
+        preferenceId: "3f6d9e1b-c7d5-4404-9ff7-8d0d499e0ed0",
       );
 
       _showResult(paymentResultModel);
