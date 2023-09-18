@@ -189,6 +189,7 @@ class FlutterPayments {
     required double unitPrice,
     required String name,
     required String email,
+    String? externalReference,
   }) async {
     return await DataManager.createPreferenceIdMercadoPago(
       accessToken: accessToken,
@@ -198,6 +199,7 @@ class FlutterPayments {
       unitPrice: unitPrice,
       name: name,
       email: email,
+      externalReference: externalReference,
     );
   }
 

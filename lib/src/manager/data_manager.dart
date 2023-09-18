@@ -117,6 +117,7 @@ class DataManager {
     required double unitPrice,
     required String name,
     required String email,
+    String? externalReference,
   }) async {
     String body = json.encode(
       {
@@ -149,11 +150,52 @@ class DataManager {
           "success": "https://www.example.com/success",
           "pending": "https://www.example.com/pending",
           "failure": "https://www.example.com/failure"
-        }
+        },
+        "external_reference": externalReference,
+        "metadata": {
+          "external_reference": externalReference,
+        },
       },
     );
     final response = await http.post(
       Uri.parse('https://api.mercadopago.com/checkout/preferences'),
+      headers: {
+        "Authorization": "Bearer $accessToken",
+        "Content-Type": "application/json"
+      },
+      body: body,
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final Map<String, dynamic> responseBody = json.decode(response.body);
+      return responseBody["id"];
+    } else {
+      throw Exception('Error preferenceId');
+    }
+  }
+
+  static Future<String?> updatePreferenceIdMercadoPago({
+    required String accessToken,
+    required String preferenceID,
+    //body
+    String? externalReference,
+  }) async {
+    String body = json.encode(
+      {
+        "back_urls": {
+          "success": "https://www.example.com/success",
+          "pending": "https://www.example.com/pending",
+          "failure": "https://www.example.com/failure"
+        },
+        "external_reference": externalReference,
+        "metadata": {
+          "external_reference": externalReference,
+        },
+      },
+    );
+    final response = await http.post(
+      Uri.parse(
+          'https://api.mercadopago.com/checkout/preferences/$preferenceID'),
       headers: {
         "Authorization": "Bearer $accessToken",
         "Content-Type": "application/json"

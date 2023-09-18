@@ -142,6 +142,7 @@ class HomePageController extends ControllerMVC implements IViewController {
         unitPrice: 5000.99,
         name: "Jorge",
         email: "jmamani@siltium.com",
+        externalReference: "12345678",
       ),
       onResult: (String? result) {
         preferenceID = result;
