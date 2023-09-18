@@ -11,6 +11,7 @@ Plugin para incluir en proyectos mobile de Siltium, permite realizar pagos usand
 <br>
 - Realizar pagos en MercadoPago de forma automatica por el SDK o de forma manual empleando un popup para cargar la información de la tarjeta.
 <br>
+<br>
 **0.2.0**
 <br>
 - Realizar pagos en MercadoPago por medio de un WebView, realizar pagos por medio de TotalCoin.
