@@ -7,4 +7,5 @@ Initial release:
 ## v0.2.0
 - SDK nativo de ¡OS deprecado el 26/08/2023, SDK nativo de Android funcionando correctamente
 - Realizar Pagos en MercadoPago por medio de un WebView usando Checkout PRO
+- Realizar Pagos en TotalCoin por medio de un WebView
 - Creación y actualización de PreferenceID de MercadoPago
