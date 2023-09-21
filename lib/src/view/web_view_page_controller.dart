@@ -147,7 +147,24 @@ class WebViewPageController extends ControllerMVC implements IViewController {
         if (request.url.startsWith("https://www.example.com/")) {
           String backURL = request.url;
           backURL = backURL.replaceAll("https://www.example.com/", "");
-          result["status"] = backURL == "success" ? "approved" : null;
+
+          String? urlRequestStatus;
+          switch (backURL) {
+            case "success":
+              urlRequestStatus = "approved";
+              break;
+            case "failure":
+              urlRequestStatus = "rejected";
+              break;
+            case "pending":
+              urlRequestStatus = "in_process";
+              break;
+            default:
+              urlRequestStatus = null;
+              break;
+          }
+          result["status"] = urlRequestStatus;
+
           onBack(context);
           return NavigationDecision.prevent;
         }
