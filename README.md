@@ -52,3 +52,20 @@ android {
 }
 ```
 
+## **Como capturar los resultados del Pago**
+- Ejemplo:
+```gradle
+void _showResult(PaymentResultModel paymentResultModel) {
+    if (paymentResultModel.errorMessage != null) {
+      //print("Pago Error: ${paymentResult.errorMessage}");
+    } else if (paymentResultModel.result.toLowerCase() == "canceled") {
+      //print("Pago Cancelado");
+    } else if (paymentResultModel.status == "rejected") {
+      //print("Pago Rechazado");
+    } else if (paymentResultModel.status == "approved") {
+      //print("Pago Aprobado");
+    } else if (paymentResultModel.status == "in_process") {
+      //print("Pago pendiente");
+    }
+  }
+```
