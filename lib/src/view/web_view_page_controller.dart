@@ -30,7 +30,7 @@ class WebViewPageController extends ControllerMVC implements IViewController {
   void initPage({
     Uri? url,
     PaymentGatewaysEnum paymentGatewaysEnum = PaymentGatewaysEnum.mercadopago,
-  }) {
+  }) async {
     this.url = url;
     this.paymentGatewaysEnum = paymentGatewaysEnum;
 
@@ -66,6 +66,11 @@ class WebViewPageController extends ControllerMVC implements IViewController {
         ),
       )
       ..loadRequest(this.url! /* Uri.parse('https://flutter.dev') */);
+
+    isLoading = true;
+    await Future.delayed(const Duration(seconds: 4));
+    isLoading = false;
+    setState(() {});
   }
 
   @override
