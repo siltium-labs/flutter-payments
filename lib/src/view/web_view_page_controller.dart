@@ -44,6 +44,7 @@ class WebViewPageController extends ControllerMVC implements IViewController {
           onProgress: (int progress) {
             // Update loading bar.
             //print(progress);
+            setLoading(progress != 100 ? true : false);
           },
           onPageStarted: (String url) {
             //print("\n${lineas}\nURL START: ${url}\n${lineas}\n\n");
@@ -59,18 +60,15 @@ class WebViewPageController extends ControllerMVC implements IViewController {
 
             return NavigationDecision.navigate;
           },
-          onUrlChange: (change) {
+          onUrlChange: (change) async {
             print("\n${lineas}\nURL CHANGE: ${change.url}\n${lineas}\n\n");
             lastURL = change.url ?? "";
+            //String? title = await webViewController.getTitle();
+            //print("\n${lineas}\nTITLE: ${title ?? "null"}\n${lineas}\n\n");
           },
         ),
       )
       ..loadRequest(this.url! /* Uri.parse('https://flutter.dev') */);
-
-    isLoading = true;
-    await Future.delayed(const Duration(seconds: 4));
-    isLoading = false;
-    setState(() {});
   }
 
   @override
