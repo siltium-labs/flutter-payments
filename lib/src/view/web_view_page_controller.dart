@@ -52,7 +52,9 @@ class WebViewPageController extends ControllerMVC implements IViewController {
           onPageFinished: (String url) {
             //print("\n${lineas}\nURL FINISH: ${url}\n${lineas}\n\n");
           },
-          onWebResourceError: (WebResourceError error) {},
+          onWebResourceError: (WebResourceError error) {
+            //print("\n${lineas}\nERROR: ${error.url}\n${lineas}\n\n");
+          },
           onNavigationRequest: (NavigationRequest request) {
             print("\n${lineas}\nURL REQUEST: ${request.url}\n${lineas}\n\n");
 

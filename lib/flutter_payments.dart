@@ -203,6 +203,18 @@ class FlutterPayments {
     );
   }
 
+  static Future<String?> updatePreferenceIdMercadoPago({
+    required String accessToken,
+    required String preferenceId,
+    String? externalReference,
+  }) async {
+    return await DataManager.updatePreferenceIdMercadoPago(
+      accessToken: accessToken,
+      preferenceID: preferenceId,
+      externalReference: externalReference,
+    );
+  }
+
   // TOTAL COIN
 
   static Future<PaymentResultModel> payWithTotalCoinWeb({
