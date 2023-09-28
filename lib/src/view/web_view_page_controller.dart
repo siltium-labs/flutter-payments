@@ -23,6 +23,8 @@ class WebViewPageController extends ControllerMVC implements IViewController {
   Uri? url;
   late PaymentGatewaysEnum paymentGatewaysEnum;
   late BuildContext context;
+  late bool enablePhysicalBackButton;
+
   Map<String, dynamic> result = {};
   String lastURL = "";
 
@@ -30,9 +32,11 @@ class WebViewPageController extends ControllerMVC implements IViewController {
   void initPage({
     Uri? url,
     PaymentGatewaysEnum paymentGatewaysEnum = PaymentGatewaysEnum.mercadopago,
+    bool enablePhysicalBackButton = true,
   }) async {
     this.url = url;
     this.paymentGatewaysEnum = paymentGatewaysEnum;
+    this.enablePhysicalBackButton = enablePhysicalBackButton;
 
     String lineas = "-" * 20;
 
@@ -94,11 +98,16 @@ class WebViewPageController extends ControllerMVC implements IViewController {
     }
   } */
 
-  Future<bool> onBack(BuildContext context) async {
-    _onBackConditions();
-
-    Navigator.of(context).pop(result.isNotEmpty ? result : null);
+  Future<bool> onPhysicalBackButton(BuildContext context) async {
+    if (enablePhysicalBackButton) {
+      onBack(context);
+    }
     return false;
+  }
+
+  void onBack(BuildContext context) {
+    _onBackConditions();
+    Navigator.of(context).pop(result.isNotEmpty ? result : null);
   }
 
   void _onBackConditions() {

@@ -230,6 +230,7 @@ class FlutterPayments {
             url: Uri.parse(
               "https://test.totalcoin.com/workspace/checkout/receptor?requestId=$preferenceId",
             ),
+            enablePhysicalBackButton: false,
           ),
         ),
       );

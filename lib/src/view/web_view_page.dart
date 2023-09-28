@@ -11,9 +11,11 @@ import '../components/common/loading_component.dart';
 class WebViewPage extends StatefulWidget {
   final Uri url;
   final PaymentGatewaysEnum paymentGatewaysEnum;
+  final bool enablePhysicalBackButton;
   const WebViewPage({
     required this.url,
     required this.paymentGatewaysEnum,
+    this.enablePhysicalBackButton = true,
     Key? key,
   }) : super(key: key);
   @override
@@ -31,6 +33,7 @@ class WebViewPageState extends StateMVC<WebViewPage> {
     _con.initPage(
       url: widget.url,
       paymentGatewaysEnum: widget.paymentGatewaysEnum,
+      enablePhysicalBackButton: widget.enablePhysicalBackButton,
     );
     super.initState();
   }
@@ -40,7 +43,7 @@ class WebViewPageState extends StateMVC<WebViewPage> {
     _con.context = context;
     return SafeArea(
       child: WillPopScope(
-        onWillPop: () => _con.onBack(context),
+        onWillPop: () => _con.onPhysicalBackButton(context),
         child: Scaffold(
           backgroundColor: kWhite,
           /* appBar: AppBar(
