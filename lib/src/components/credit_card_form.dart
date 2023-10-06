@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/credit_card_model.dart';
+import 'common/item_data_form_component.dart';
 import 'credit_card_widget.dart';
 //import 'flutter_credit_card.dart';
 
@@ -236,9 +237,9 @@ class _CreditCardFormState extends State<CreditCardForm> {
       TextEditingController();
   final TextEditingController _cvvCodeController =
       MaskedTextController(mask: '0000');
-  final TextEditingController _documentTypeController = TextEditingController(
-    text: "DNI",
-  );
+  // final TextEditingController _documentTypeController = TextEditingController(
+  //   text: "DNI",
+  // );
   final TextEditingController _documentNumberController =
       TextEditingController();
 
@@ -247,6 +248,10 @@ class _CreditCardFormState extends State<CreditCardForm> {
   FocusNode cardHolderNode = FocusNode();
   FocusNode documentTypeNode = FocusNode();
   FocusNode documentNumberNode = FocusNode();
+
+  //Tipo de Documento
+  List<String> items = [];
+  String? selectedItem;
 
   void textFieldFocusDidChange() {
     creditCardModel.isCvvFocused = cvvFocusNode.hasFocus;
@@ -275,6 +280,16 @@ class _CreditCardFormState extends State<CreditCardForm> {
   @override
   void initState() {
     super.initState();
+
+    items = [
+      "DNI",
+      "CI",
+      "RUT",
+      "RUC",
+      "PASAPORTE",
+      "CEDULA DE EXTRANJERIA",
+      "CEDULA DE IDENTIDAD",
+    ];
 
     createCreditCardModel();
 
@@ -348,7 +363,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
 
   Widget formContainer({required Widget child}) {
     return Container(
-      height: 70,
+      //height: 70,
       decoration: BoxDecoration(
         color: _makeColorLighter(
           widget.themeColor,
@@ -414,6 +429,45 @@ class _CreditCardFormState extends State<CreditCardForm> {
                       },
                 ),
               ),
+              /* child: ItemDataFormComponent.number(
+                height: 40,
+                controller: _cardNumberController,
+                innerPadding: const EdgeInsets.only(left: 15, right: 10),
+                placeholder: "Card number",
+                //placeHolder: "Ingresar empresa...",
+                /* placeholderStyle: const TextStyle(
+                  color: kGray_T1,
+                  fontSize: kFontSize40,
+                  fontWeight: kFontWeightLight,
+                ),
+                textStyle: const TextStyle(
+                  color: kGray_T1,
+                  fontSize: kFontSize40,
+                  fontWeight: kFontWeightLight,
+                ), */
+
+                backgroundColor: _makeColorLighter(
+                  widget.themeColor,
+                  factor: 0.93,
+                  mix: false,
+                  mixColor: Colors.black,
+                  mixFactor: 0.1,
+                ),
+                borderRadius: BorderRadius.circular(15),
+                /* border: Border.all(
+                  color: kGray_l2,
+                ), */
+                onTextChange: (text) {
+                  setState(() {
+                    cardNumber = _cardNumberController.text;
+                    creditCardModel.cardNumber = cardNumber;
+                    onCreditCardModelChange(creditCardModel);
+                  });
+                },
+                onEditComplete: () {
+                  FocusScope.of(context).requestFocus(expiryDateNode);
+                },
+              ), */
             ),
             const SizedBox(height: 10),
             Row(
@@ -566,7 +620,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
                   child: Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(right: 15),
-                      child: formContainer(
+                      /* child: formContainer(
                         child: TextFormField(
                           key: widget.documentTypeKey,
                           controller: _documentTypeController,
@@ -597,6 +651,30 @@ class _CreditCardFormState extends State<CreditCardForm> {
                                 }
                                 return null;
                               },
+                        ),
+                      ), */
+                      child: ItemDataFormComponent.dropDown(
+                        height: 60,
+                        items: items,
+                        selectedItem: selectedItem,
+                        onChange: (selected) {
+                          setState(() {
+                            selectedItem = selected;
+                          });
+                          //FocusScope.of(context).requestFocus(documentNumberNode);
+                        },
+                        innerPadding: const EdgeInsets.only(left: 20),
+                        placeHolder: "Tipo Doc.",
+                        placeholderStyle: const TextStyle(color: Colors.black),
+                        textStyle: const TextStyle(color: Colors.black),
+                        borderRadius: BorderRadius.circular(15),
+                        iconColor: widget.themeColor,
+                        backgroundColor: _makeColorLighter(
+                          widget.themeColor,
+                          factor: 0.93,
+                          mix: false,
+                          mixColor: Colors.black,
+                          mixFactor: 0.1,
                         ),
                       ),
                     ),

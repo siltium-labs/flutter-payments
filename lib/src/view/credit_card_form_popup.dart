@@ -85,25 +85,18 @@ class CreditCardFormPopup {
   _buttonExit() {
     return Visibility(
       visible: isCancellable,
-      child: Positioned.fill(
-        child: Align(
-          alignment: Alignment.topRight,
-          child: Padding(
-            padding: const EdgeInsets.only(
-              top: 10,
-              right: 10,
-            ),
-            child: GestureDetector(
-              key: const Key('cancelCreditCardFormPopupExitButton'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: const Icon(
-                Icons.close_rounded,
-                size: 25,
-                color: kPrimary,
-              ),
-            ),
+      child: Positioned(
+        top: 10,
+        right: 10,
+        child: GestureDetector(
+          key: const Key('cancelCreditCardFormPopupExitButton'),
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            Icons.close_rounded,
+            size: 25,
+            color: kPrimary,
           ),
         ),
       ),
