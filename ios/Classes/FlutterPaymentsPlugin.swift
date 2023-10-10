@@ -24,7 +24,8 @@ import Flutter
 import UIKit
 //import MercadoPagoSDK
 
-public class SwiftFlutterPaymentsPlugin: NSObject, FlutterPlugin, PXLifeCycleProtocol {
+//public class SwiftFlutterPaymentsPlugin: NSObject, FlutterPlugin, PXLifeCycleProtocol {
+public class SwiftFlutterPaymentsPlugin: NSObject, FlutterPlugin {
 
   var pendingResult: FlutterResult?
 
