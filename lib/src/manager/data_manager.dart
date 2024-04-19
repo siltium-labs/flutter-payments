@@ -134,7 +134,7 @@ class DataManager {
           "email": email,
         },
         "payment_methods": {
-          "exclude_payment_types": [
+          "excluded_payment_types": [
             //Tarjeta de crédito: "credit_card"
             //Tarjeta de débito: "debit_card"
             //Efectivo (pago en puntos de pago, como tiendas locales): "ticket"
