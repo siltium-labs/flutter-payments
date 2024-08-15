@@ -41,6 +41,9 @@ class WebViewPageState extends StateMVC<WebViewPage> {
     _con.initPage(
       url: widget.url,
       paymentGatewaysEnum: widget.paymentGatewaysEnum,
+      method: widget.method,
+      headers: widget.headers,
+      body: widget.body,
       enablePhysicalBackButton: widget.enablePhysicalBackButton,
     );
     super.initState();
