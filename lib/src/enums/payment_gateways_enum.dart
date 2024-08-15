@@ -1,6 +1,7 @@
 enum PaymentGatewaysEnum {
   mercadopago("mercadopago"),
-  totalcoin("totalcoin");
+  totalcoin("totalcoin"),
+  macroclick("macroclick");
 
   const PaymentGatewaysEnum(this.name);
   final String name;

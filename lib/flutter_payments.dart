@@ -5,6 +5,7 @@ import 'package:flutter_payments/src/enums/payment_gateways_enum.dart';
 import 'package:flutter_payments/src/manager/data_manager.dart';
 import 'package:flutter_payments/src/models/mercado_pago/payment_result_web_model.dart';
 import 'package:flutter_payments/src/view/web_view_page.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'flutter_payments.dart';
 
 export 'src/models/mercado_pago/payment_result_model.dart';
@@ -246,6 +247,47 @@ class FlutterPayments {
             status: paymentResultWeb.status,
           );
         }
+      }
+    } catch (e) {
+      return PaymentResultModel(
+        result: "canceled",
+        errorMessage: e.toString(),
+      );
+    }
+
+    return PaymentResultModel(result: "canceled");
+  }
+
+  //MACRO CLICK
+
+  static Future<PaymentResultModel> payWithMacroClickWeb({
+    required BuildContext context,
+    required String url,
+    required String body,
+  }) async {
+    try {
+      dynamic value = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => WebViewPage(
+            paymentGatewaysEnum: PaymentGatewaysEnum.macroclick,
+            url: Uri.parse(
+              url,
+            ),
+            method: LoadRequestMethod.post,
+            headers: const {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: body,
+            enablePhysicalBackButton: false,
+          ),
+        ),
+      );
+
+      if (value != null) {
+        return PaymentResultModel(
+          result: "done",
+        );
       }
     } catch (e) {
       return PaymentResultModel(

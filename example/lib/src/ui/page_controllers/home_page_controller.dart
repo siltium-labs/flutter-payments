@@ -68,39 +68,42 @@ class HomePageController extends ControllerMVC implements IViewController {
     });
   }
 
-  void _showResult(PaymentResultModel paymentResultModel) async {
+  void _showResult({
+    required String title,
+    required PaymentResultModel paymentResultModel,
+  }) async {
     if (paymentResultModel.errorMessage != null) {
       //print("Pago Error: ${paymentResult.errorMessage}");
       await PageManager().openDefaultAlertPopup(
-        title: "Mercado Pago",
+        title: title,
         description: "Pago error: ${paymentResultModel.errorMessage}",
         labelAccept: "Ok",
       );
     } else if (paymentResultModel.result.toLowerCase() == "canceled") {
       //print("Pago Cancelado");
       await PageManager().openDefaultAlertPopup(
-        title: "Mercado Pago",
+        title: title,
         description: "Pago cancelado",
         labelAccept: "Ok",
       );
     } else if (paymentResultModel.status == "rejected") {
       //print("Pago Rechazado");
       await PageManager().openDefaultAlertPopup(
-        title: "Mercado Pago",
+        title: title,
         description: "Pago rechazado",
         labelAccept: "Ok",
       );
     } else if (paymentResultModel.status == "approved") {
       //print("Pago Aprobado");
       await PageManager().openDefaultAlertPopup(
-        title: "Mercado Pago",
+        title: title,
         description: "Pago aprobado",
         labelAccept: "Ok",
       );
     } else if (paymentResultModel.status == "in_process") {
       //print("Pago pendiente");
       await PageManager().openDefaultAlertPopup(
-        title: "Mercado Pago",
+        title: title,
         description: "Pago pendiente",
         labelAccept: "Ok",
       );
@@ -116,7 +119,10 @@ class HomePageController extends ControllerMVC implements IViewController {
       preferenceId: preferenceIDcreated!,
     );
 
-    _showResult(paymentResultModel);
+    _showResult(
+      title: "Mercado Pago SDK",
+      paymentResultModel: paymentResultModel,
+    );
   }
 
   void payWithMercadoPagoManual() async {
@@ -160,7 +166,10 @@ class HomePageController extends ControllerMVC implements IViewController {
         preferenceId: preferenceIDcreated!,
       );
 
-      _showResult(paymentResultModel);
+      _showResult(
+        title: "Mercado Pago Web",
+        paymentResultModel: paymentResultModel,
+      );
     }
   }
 
@@ -172,7 +181,24 @@ class HomePageController extends ControllerMVC implements IViewController {
         preferenceId: "35f7e654-6ec9-4a0e-9fb3-a3f5ebcee8d7",
       );
 
-      _showResult(paymentResultModel);
+      _showResult(
+        title: "Total Coin Web",
+        paymentResultModel: paymentResultModel,
+      );
     }
+  }
+
+  void payWithMacroClickWeb() async {
+    PaymentResultModel paymentResultModel =
+        await FlutterPayments.payWithMacroClickWeb(
+      context: PageManager().navigatorKey.currentContext!,
+      url: "",
+      body: "",
+    );
+
+    _showResult(
+      title: "Macro Click Web",
+      paymentResultModel: paymentResultModel,
+    );
   }
 }

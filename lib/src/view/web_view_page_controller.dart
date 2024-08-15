@@ -1,4 +1,8 @@
 //import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:typed_data';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_payments/src/enums/payment_gateways_enum.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -21,8 +25,11 @@ class WebViewPageController extends ControllerMVC implements IViewController {
   //InAppWebViewController? webViewController;
   late WebViewController webViewController;
   Uri? url;
-  late PaymentGatewaysEnum paymentGatewaysEnum;
   late BuildContext context;
+  late PaymentGatewaysEnum paymentGatewaysEnum;
+  late LoadRequestMethod method;
+  late Map<String, String> headers;
+  late String? body;
   late bool enablePhysicalBackButton;
 
   Map<String, dynamic> result = {};
@@ -32,10 +39,16 @@ class WebViewPageController extends ControllerMVC implements IViewController {
   void initPage({
     Uri? url,
     PaymentGatewaysEnum paymentGatewaysEnum = PaymentGatewaysEnum.mercadopago,
+    LoadRequestMethod method = LoadRequestMethod.get,
+    Map<String, String> headers = const <String, String>{},
+    String? body,
     bool enablePhysicalBackButton = true,
   }) async {
     this.url = url;
     this.paymentGatewaysEnum = paymentGatewaysEnum;
+    this.method = method;
+    this.headers = headers;
+    this.body = body;
     this.enablePhysicalBackButton = enablePhysicalBackButton;
 
     String lineas = "-" * 20;
@@ -47,34 +60,41 @@ class WebViewPageController extends ControllerMVC implements IViewController {
         NavigationDelegate(
           onProgress: (int progress) {
             // Update loading bar.
-            //print(progress);
+            //log(progress);
             setLoading(progress != 100 ? true : false);
           },
           onPageStarted: (String url) {
-            //print("\n${lineas}\nURL START: ${url}\n${lineas}\n\n");
+            //log("\n${lineas}\nURL START: ${url}\n${lineas}\n\n");
           },
           onPageFinished: (String url) {
-            //print("\n${lineas}\nURL FINISH: ${url}\n${lineas}\n\n");
+            //log("\n${lineas}\nURL FINISH: ${url}\n${lineas}\n\n");
           },
           onWebResourceError: (WebResourceError error) {
-            //print("\n${lineas}\nERROR: ${error.url}\n${lineas}\n\n");
+            //log("\n${lineas}\nERROR: ${error.url}\n${lineas}\n\n");
           },
           onNavigationRequest: (NavigationRequest request) {
-            print("\n${lineas}\nURL REQUEST: ${request.url}\n${lineas}\n\n");
+            log("\n${lineas}\nURL REQUEST: ${request.url}\n${lineas}\n\n");
 
             _onNavigationRequest(request);
 
             return NavigationDecision.navigate;
           },
           onUrlChange: (change) async {
-            print("\n${lineas}\nURL CHANGE: ${change.url}\n${lineas}\n\n");
+            log("\n${lineas}\nURL CHANGE: ${change.url}\n${lineas}\n\n");
             lastURL = change.url ?? "";
             //String? title = await webViewController.getTitle();
-            //print("\n${lineas}\nTITLE: ${title ?? "null"}\n${lineas}\n\n");
+            //log("\n${lineas}\nTITLE: ${title ?? "null"}\n${lineas}\n\n");
           },
         ),
       )
-      ..loadRequest(this.url! /* Uri.parse('https://flutter.dev') */);
+      ..loadRequest(
+        this.url! /* Uri.parse('https://flutter.dev') */,
+        method: method,
+        headers: headers,
+        body: body != null && body.trim().isNotEmpty
+            ? Uint8List.fromList(utf8.encode(body.trim()))
+            : null,
+      );
   }
 
   @override
@@ -124,6 +144,8 @@ class WebViewPageController extends ControllerMVC implements IViewController {
         }
         break;
       case PaymentGatewaysEnum.totalcoin:
+        break;
+      case PaymentGatewaysEnum.macroclick:
         break;
     }
   }
@@ -182,10 +204,39 @@ class WebViewPageController extends ControllerMVC implements IViewController {
           onBack(context);
           return NavigationDecision.prevent;
         }
-        if (request.url == "https://test.totalcoin.com/") {
+        // if (request.url == "https://test.totalcoin.com/") {
+        if (request.url == "https://ar.totalcoin.com/") {
           onBack(context);
           return NavigationDecision.prevent;
         }
+        break;
+
+      case PaymentGatewaysEnum.macroclick:
+        if (request.url.startsWith("https://www.example.com/")) {
+          String backURL = request.url;
+          backURL = backURL.replaceAll("https://www.example.com/", "");
+
+          String? urlRequestStatus;
+          switch (backURL) {
+            case "success":
+              urlRequestStatus = "approved";
+              break;
+            case "failure":
+              urlRequestStatus = "rejected";
+              break;
+            case "pending":
+              urlRequestStatus = "in_process";
+              break;
+            default:
+              urlRequestStatus = null;
+              break;
+          }
+          result["status"] = urlRequestStatus;
+
+          onBack(context);
+          return NavigationDecision.prevent;
+        }
+
         break;
     }
   }

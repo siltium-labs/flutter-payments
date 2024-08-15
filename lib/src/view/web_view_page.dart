@@ -11,13 +11,21 @@ import '../components/common/loading_component.dart';
 class WebViewPage extends StatefulWidget {
   final Uri url;
   final PaymentGatewaysEnum paymentGatewaysEnum;
+  final LoadRequestMethod method;
+  final Map<String, String> headers;
+  final String? body;
   final bool enablePhysicalBackButton;
+
   const WebViewPage({
     required this.url,
     required this.paymentGatewaysEnum,
+    this.method = LoadRequestMethod.get,
+    this.headers = const <String, String>{},
+    this.body,
     this.enablePhysicalBackButton = true,
     Key? key,
   }) : super(key: key);
+
   @override
   WebViewPageState createState() => WebViewPageState();
 }
