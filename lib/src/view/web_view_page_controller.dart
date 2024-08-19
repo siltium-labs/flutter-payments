@@ -70,7 +70,7 @@ class WebViewPageController extends ControllerMVC implements IViewController {
             //log("\n${lineas}\nURL FINISH: ${url}\n${lineas}\n\n");
           },
           onWebResourceError: (WebResourceError error) {
-            //log("\n${lineas}\nERROR: ${error.url}\n${lineas}\n\n");
+            log("\n${lineas}\nURL ERROR: ${error.url}\n${lineas}\n\n");
           },
           onNavigationRequest: (NavigationRequest request) {
             log("\n${lineas}\nURL REQUEST: ${request.url}\n${lineas}\n\n");
@@ -120,7 +120,9 @@ class WebViewPageController extends ControllerMVC implements IViewController {
 
   Future<bool> onPhysicalBackButton(BuildContext context) async {
     if (enablePhysicalBackButton) {
-      onBack(context);
+      if (!isLoading) {
+        onBack(context);
+      }
     }
     return false;
   }

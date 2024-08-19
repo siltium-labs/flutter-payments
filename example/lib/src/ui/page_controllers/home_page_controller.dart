@@ -192,8 +192,26 @@ class HomePageController extends ControllerMVC implements IViewController {
     PaymentResultModel paymentResultModel =
         await FlutterPayments.payWithMacroClickWeb(
       context: PageManager().navigatorKey.currentContext!,
-      url: "",
-      body: "",
+      url: "https://sandboxpp.asjservicios.com.ar/",
+      body:
+          "Hash=035a22333034bef0853987ec9a3534d3868f9ead708c8f8163e1d49db0c0784a&Comercio=a6c51c8e-cfa3-4c0c-ba5e-0c0af4cbd284&SucursalComercio=njwkDlzltSCSTWb3mdaxnzvHMu50S0nhPdkgvjTDMBY%3D&TransaccionComercioId=transaction-dummy__2024-08-16_16-29-29&ClientData.NombreApellido=FirstName+LastName&CallbackSuccess=AqXbtrzfpQyn2lkbk2GTSzcLdM6fkD%2By6xYDZlh3b3kmQyhjoyPcky0E1p9O6pn5&CallbackCancel=bPTJF%2FZ4TpVNg4irH52sFLyEHRSWwr3lh3W11hVmoJaSPqC8o%2BZqH3Y96VO%2BmNO1&Monto=D95p2IqUobVcxbu%2F9RwBJ5c2GjuMHVq%2F7861f7DAd1c%3D&Informacion=rtzbiYjbAfCwN9hACA6N3xDC4UTd8OLtdPG6iqBVIqiop4I3kCP%2FFPUQu8VG9W0m&ClientData.CUIT=11123456784&Producto%5B0%5D=Garrafa+15kg&MontoProducto%5B0%5D=30000",
+    );
+
+    _showResult(
+      title: "Macro Click Web",
+      paymentResultModel: paymentResultModel,
+    );
+  }
+
+  void payWithMacroClickWebPopup() async {
+    PaymentResultModel paymentResultModel =
+        await FlutterPayments.payWithMacroClickWebPopup(
+      context: PageManager().navigatorKey.currentContext!,
+      url: "https://sandboxpp.asjservicios.com.ar/",
+      body:
+          "Hash=035a22333034bef0853987ec9a3534d3868f9ead708c8f8163e1d49db0c0784a&Comercio=a6c51c8e-cfa3-4c0c-ba5e-0c0af4cbd284&SucursalComercio=njwkDlzltSCSTWb3mdaxnzvHMu50S0nhPdkgvjTDMBY%3D&TransaccionComercioId=transaction-dummy__2024-08-16_16-29-29&ClientData.NombreApellido=FirstName+LastName&CallbackSuccess=AqXbtrzfpQyn2lkbk2GTSzcLdM6fkD%2By6xYDZlh3b3kmQyhjoyPcky0E1p9O6pn5&CallbackCancel=bPTJF%2FZ4TpVNg4irH52sFLyEHRSWwr3lh3W11hVmoJaSPqC8o%2BZqH3Y96VO%2BmNO1&Monto=D95p2IqUobVcxbu%2F9RwBJ5c2GjuMHVq%2F7861f7DAd1c%3D&Informacion=rtzbiYjbAfCwN9hACA6N3xDC4UTd8OLtdPG6iqBVIqiop4I3kCP%2FFPUQu8VG9W0m&ClientData.CUIT=11123456784&Producto%5B0%5D=Garrafa+15kg&MontoProducto%5B0%5D=30000",
+      isCancellable: true,
+      enablePhysicalBackButton: false,
     );
 
     _showResult(

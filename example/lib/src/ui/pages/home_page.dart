@@ -201,6 +201,29 @@ class HomePagePageState extends StateMVC<HomePage> {
                 _con.payWithMacroClickWeb();
               },
             ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 25,
+                  vertical: 10,
+                ),
+                backgroundColor: kPrimary,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+              ),
+              child: const Text(
+                "Macro Click Web Popup",
+                style: TextStyle(
+                  color: kWhite,
+                  fontSize: kFontSize40,
+                ),
+              ),
+              onPressed: () {
+                _con.payWithMacroClickWebPopup();
+              },
+            ),
           ],
         ),
       ),

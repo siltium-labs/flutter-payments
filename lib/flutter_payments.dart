@@ -5,6 +5,7 @@ import 'package:flutter_payments/src/enums/payment_gateways_enum.dart';
 import 'package:flutter_payments/src/manager/data_manager.dart';
 import 'package:flutter_payments/src/models/mercado_pago/payment_result_web_model.dart';
 import 'package:flutter_payments/src/view/web_view_page.dart';
+import 'package:flutter_payments/src/view/web_view_popup.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'flutter_payments.dart';
 
@@ -279,10 +280,149 @@ class FlutterPayments {
               "Content-Type": "application/x-www-form-urlencoded"
             },
             body: body,
-            enablePhysicalBackButton: false,
+            enablePhysicalBackButton: true,
           ),
         ),
       );
+
+      if (value != null) {
+        return PaymentResultModel(
+          result: "done",
+        );
+      }
+    } catch (e) {
+      return PaymentResultModel(
+        result: "canceled",
+        errorMessage: e.toString(),
+      );
+    }
+
+    return PaymentResultModel(result: "canceled");
+  }
+
+  static Future<PaymentResultModel> payWithMacroClickWebWithAppBar({
+    required BuildContext context,
+    required String url,
+    required String body,
+
+    //APPBAR
+    bool enableAppBar = false,
+    Color? appBarBackgroundColor,
+    String? appBarTitle,
+    bool? centerTitle,
+    TextStyle? appBarTitleStyle,
+    Widget? backButton,
+  }) async {
+    try {
+      dynamic value = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => WebViewPage(
+            paymentGatewaysEnum: PaymentGatewaysEnum.macroclick,
+            url: Uri.parse(
+              url,
+            ),
+            method: LoadRequestMethod.post,
+            headers: const {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: body,
+            enablePhysicalBackButton: true,
+
+            //APPBAR
+            enableAppBar: enableAppBar,
+            appBarTitle: appBarTitle,
+            centerTitle: centerTitle,
+            appBarTitleStyle: appBarTitleStyle,
+            appBarBackgroundColor: appBarBackgroundColor,
+            backButton: backButton,
+          ),
+        ),
+      );
+
+      if (value != null) {
+        return PaymentResultModel(
+          result: "done",
+        );
+      }
+    } catch (e) {
+      return PaymentResultModel(
+        result: "canceled",
+        errorMessage: e.toString(),
+      );
+    }
+
+    return PaymentResultModel(result: "canceled");
+  }
+
+  static Future<PaymentResultModel> payWithMacroClickWebPopup({
+    required BuildContext context,
+    required String url,
+    required String body,
+    bool enablePhysicalBackButton = true,
+
+    //POPUP
+    Color? externalBackgroundColor,
+    bool isCancellable = true,
+
+    //APPBAR
+    bool enableAppBar = false,
+    Color? appBarBackgroundColor,
+    String? appBarTitle,
+    bool? centerTitle,
+    TextStyle? appBarTitleStyle,
+    Widget? backButton,
+  }) async {
+    try {
+      // dynamic value = await Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => WebViewPage(
+      //       paymentGatewaysEnum: PaymentGatewaysEnum.macroclick,
+      //       url: Uri.parse(
+      //         url,
+      //       ),
+      //       method: LoadRequestMethod.post,
+      //       headers: const {
+      //         "Content-Type": "application/x-www-form-urlencoded"
+      //       },
+      //       body: body,
+      //       enablePhysicalBackButton: true,
+
+      //       //APPBAR
+      //       enableAppBar: enableAppBar,
+      //       appBarTitle: appBarTitle,
+      //       centerTitle: centerTitle,
+      //       appBarTitleStyle: appBarTitleStyle,
+      //       appBarBackgroundColor: appBarBackgroundColor,
+      //       backButton: backButton,
+      //     ),
+      //   ),
+      // );
+
+      dynamic value = await WebViewPopup(
+        context: context,
+        isCancellable: isCancellable,
+        themColor: externalBackgroundColor,
+        content: WebViewPage(
+          paymentGatewaysEnum: PaymentGatewaysEnum.macroclick,
+          url: Uri.parse(
+            url,
+          ),
+          method: LoadRequestMethod.post,
+          headers: const {"Content-Type": "application/x-www-form-urlencoded"},
+          body: body,
+          enablePhysicalBackButton: enablePhysicalBackButton,
+
+          //APPBAR
+          enableAppBar: enableAppBar,
+          appBarTitle: appBarTitle,
+          centerTitle: centerTitle,
+          appBarTitleStyle: appBarTitleStyle,
+          appBarBackgroundColor: appBarBackgroundColor,
+          backButton: backButton,
+        ),
+      ).show();
 
       if (value != null) {
         return PaymentResultModel(

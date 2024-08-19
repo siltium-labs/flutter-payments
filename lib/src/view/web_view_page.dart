@@ -16,6 +16,14 @@ class WebViewPage extends StatefulWidget {
   final String? body;
   final bool enablePhysicalBackButton;
 
+  //APPBAR
+  final bool enableAppBar;
+  final String? appBarTitle;
+  final bool? centerTitle;
+  final TextStyle? appBarTitleStyle;
+  final Color? appBarBackgroundColor;
+  final Widget? backButton;
+
   const WebViewPage({
     required this.url,
     required this.paymentGatewaysEnum,
@@ -23,6 +31,14 @@ class WebViewPage extends StatefulWidget {
     this.headers = const <String, String>{},
     this.body,
     this.enablePhysicalBackButton = true,
+
+    //APPBAR
+    this.enableAppBar = false,
+    this.appBarTitle,
+    this.centerTitle,
+    this.appBarTitleStyle,
+    this.appBarBackgroundColor,
+    this.backButton,
     Key? key,
   }) : super(key: key);
 
@@ -57,20 +73,27 @@ class WebViewPageState extends StateMVC<WebViewPage> {
         onWillPop: () => _con.onPhysicalBackButton(context),
         child: Scaffold(
           backgroundColor: kWhite,
-          /* appBar: AppBar(
-            backgroundColor: kPrimary,
-            elevation: 0,
-            // title: const Text("CPACF Web"),
-            leading: GestureDetector(
-              onTap: () {
-                _con.onBack(context);
-              },
-              child: const Icon(
-                Icons.keyboard_backspace,
-                color: kWhite,
-              ),
-            ),
-          ), */
+          appBar: widget.enableAppBar
+              ? AppBar(
+                  backgroundColor: widget.appBarBackgroundColor ?? kPrimary,
+                  elevation: 0,
+                  title: Text(
+                    widget.appBarTitle?.trim() ?? "",
+                    style: widget.appBarTitleStyle,
+                  ),
+                  centerTitle: widget.centerTitle,
+                  leading: GestureDetector(
+                    onTap: () {
+                      _con.onBack(context);
+                    },
+                    child: widget.backButton ??
+                        const Icon(
+                          Icons.keyboard_backspace,
+                          color: kWhite,
+                        ),
+                  ),
+                )
+              : null,
           body: Stack(
             children: [
               WebViewWidget(controller: _con.webViewController),
