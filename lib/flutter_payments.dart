@@ -286,9 +286,16 @@ class FlutterPayments {
       );
 
       if (value != null) {
-        return PaymentResultModel(
-          result: "done",
-        );
+        Map<String, dynamic> result = value!;
+        PaymentResultWebModel paymentResultWeb =
+            PaymentResultWebModel.fromJson(result);
+
+        if (paymentResultWeb.status != null) {
+          return PaymentResultModel(
+            result: "done",
+            status: paymentResultWeb.status,
+          );
+        }
       }
     } catch (e) {
       return PaymentResultModel(
@@ -341,9 +348,16 @@ class FlutterPayments {
       );
 
       if (value != null) {
-        return PaymentResultModel(
-          result: "done",
-        );
+        Map<String, dynamic> result = value!;
+        PaymentResultWebModel paymentResultWeb =
+            PaymentResultWebModel.fromJson(result);
+
+        if (paymentResultWeb.status != null) {
+          return PaymentResultModel(
+            result: "done",
+            status: paymentResultWeb.status,
+          );
+        }
       }
     } catch (e) {
       return PaymentResultModel(
@@ -425,9 +439,16 @@ class FlutterPayments {
       ).show();
 
       if (value != null) {
-        return PaymentResultModel(
-          result: "done",
-        );
+        Map<String, dynamic> result = value!;
+        PaymentResultWebModel paymentResultWeb =
+            PaymentResultWebModel.fromJson(result);
+
+        if (paymentResultWeb.status != null) {
+          return PaymentResultModel(
+            result: "done",
+            status: paymentResultWeb.status,
+          );
+        }
       }
     } catch (e) {
       return PaymentResultModel(

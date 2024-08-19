@@ -148,6 +148,9 @@ class WebViewPageController extends ControllerMVC implements IViewController {
       case PaymentGatewaysEnum.totalcoin:
         break;
       case PaymentGatewaysEnum.macroclick:
+        if (lastURL.contains("Home/ReciboPago?")) {
+          result["status"] = "approved";
+        }
         break;
     }
   }
