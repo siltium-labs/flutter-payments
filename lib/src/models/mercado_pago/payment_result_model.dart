@@ -15,6 +15,10 @@ class PaymentResultModel {
   // TODO: Payer
   // TODO: transactionDetails
 
+  //LOCAL
+  String? link;
+  String? downloadLink;
+
   PaymentResultModel({
     required this.result,
     this.id,
@@ -29,6 +33,9 @@ class PaymentResultModel {
     this.operationType,
     this.transactionAmount,
     this.errorMessage,
+    //LOCAl
+    this.link,
+    this.downloadLink,
   });
 
   PaymentResultModel.fromJson(Map<String, dynamic> json) {
@@ -45,5 +52,9 @@ class PaymentResultModel {
     operationType = json['operationType'] as String?;
     transactionAmount = json['transactionAmount'] as String?;
     errorMessage = json['errorMessage'] as String?;
+
+    //LOCAL
+    link = json["link"];
+    downloadLink = json["downloadLink"];
   }
 }

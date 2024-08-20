@@ -294,6 +294,8 @@ class FlutterPayments {
           return PaymentResultModel(
             result: "done",
             status: paymentResultWeb.status,
+            link: paymentResultWeb.link,
+            downloadLink: paymentResultWeb.downloadLink,
           );
         }
       }

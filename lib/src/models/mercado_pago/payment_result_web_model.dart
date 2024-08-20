@@ -14,6 +14,10 @@ class PaymentResultWebModel {
   String? processing_mode;
   String? merchant_account_id;
 
+  //LOCAL
+  String? link;
+  String? downloadLink;
+
   PaymentResultWebModel.fromJson(Map<String, dynamic> json) {
     statusURL = json["statusURL"];
     collection_id = json["collection_id"];
@@ -27,5 +31,9 @@ class PaymentResultWebModel {
     site_id = json["site_id"];
     processing_mode = json["processing_mode"];
     merchant_account_id = json["merchant_account_id"];
+
+    //LOCAL
+    link = json["link"];
+    downloadLink = json["downloadLink"];
   }
 }

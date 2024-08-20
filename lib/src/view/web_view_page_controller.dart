@@ -98,7 +98,10 @@ class WebViewPageController extends ControllerMVC implements IViewController {
   }
 
   @override
-  disposePage() {}
+  disposePage() {
+    webViewController.clearCache();
+    webViewController.clearLocalStorage();
+  }
 
   /* downloadFile(Uri link) async {
     bool hasStoragePermission = await Permission.storage.isGranted;
@@ -151,6 +154,10 @@ class WebViewPageController extends ControllerMVC implements IViewController {
         if (lastURL.contains("Home/ReciboPago?")) {
           result["status"] = "approved";
         }
+        if (lastURL.contains("/Home/ReciboPagoPdf?token=")) {
+          result["status"] = "approved";
+          result["downloadLink"] = lastURL;
+        }
         break;
     }
   }
@@ -180,6 +187,7 @@ class WebViewPageController extends ControllerMVC implements IViewController {
             result["status"] = backURL == "success" ? "approved" : null;
           }
           onBack(context);
+
           return NavigationDecision.prevent;
         }
         break;
@@ -238,6 +246,11 @@ class WebViewPageController extends ControllerMVC implements IViewController {
           }
           result["status"] = urlRequestStatus;
 
+          onBack(context);
+          return NavigationDecision.prevent;
+        }
+
+        if (request.url.contains("/Home/ReciboPagoPdf?token=")) {
           onBack(context);
           return NavigationDecision.prevent;
         }
