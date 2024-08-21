@@ -151,10 +151,6 @@ class WebViewPageController extends ControllerMVC implements IViewController {
       case PaymentGatewaysEnum.totalcoin:
         break;
       case PaymentGatewaysEnum.macroclick:
-        if (lastURL.contains("ReciboPago?token=")) {
-          result["status"] = "approved";
-          result["link"] = lastURL.substring(0, lastURL.indexOf("&"));
-        }
         break;
     }
   }
@@ -243,6 +239,17 @@ class WebViewPageController extends ControllerMVC implements IViewController {
           }
           result["status"] = urlRequestStatus;
 
+          onBack(context);
+          return NavigationDecision.prevent;
+        }
+
+        if (request.url.contains("ReciboPago?token=")) {
+          result["status"] = "approved";
+          String link = request.url.substring(0, lastURL.indexOf("&"));
+          result["link"] = link;
+          String downloadLink = link;
+          downloadLink.replaceAll("ReciboPago", "ReciboPagoPdf");
+          result["downloadLink"] = downloadLink;
           onBack(context);
           return NavigationDecision.prevent;
         }
