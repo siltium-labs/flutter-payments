@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_payments/flutter_payments.dart';
 import 'package:flutter_payments_example/values/k_colors.dart';
@@ -73,35 +75,35 @@ class HomePageController extends ControllerMVC implements IViewController {
     required PaymentResultModel paymentResultModel,
   }) async {
     if (paymentResultModel.errorMessage != null) {
-      //print("Pago Error: ${paymentResult.errorMessage}");
+      //log("Pago Error: ${paymentResult.errorMessage}");
       await PageManager().openDefaultAlertPopup(
         title: title,
         description: "Pago error: ${paymentResultModel.errorMessage}",
         labelAccept: "Ok",
       );
     } else if (paymentResultModel.result.toLowerCase() == "canceled") {
-      //print("Pago Cancelado");
+      //log("Pago Cancelado");
       await PageManager().openDefaultAlertPopup(
         title: title,
         description: "Pago cancelado",
         labelAccept: "Ok",
       );
     } else if (paymentResultModel.status == "rejected") {
-      //print("Pago Rechazado");
+      //log("Pago Rechazado");
       await PageManager().openDefaultAlertPopup(
         title: title,
         description: "Pago rechazado",
         labelAccept: "Ok",
       );
     } else if (paymentResultModel.status == "approved") {
-      //print("Pago Aprobado");
+      //log("Pago Aprobado");
       await PageManager().openDefaultAlertPopup(
         title: title,
         description: "Pago aprobado",
         labelAccept: "Ok",
       );
     } else if (paymentResultModel.status == "in_process") {
-      //print("Pago pendiente");
+      //log("Pago pendiente");
       await PageManager().openDefaultAlertPopup(
         title: title,
         description: "Pago pendiente",
@@ -133,7 +135,7 @@ class HomePageController extends ControllerMVC implements IViewController {
       themeColor: kPrimary,
     );
 
-    print("Obtuve resultado: $result");
+    log("Obtuve resultado: $result");
   }
 
   void createPreferenceIdMercadoPago() async {
@@ -155,7 +157,7 @@ class HomePageController extends ControllerMVC implements IViewController {
       },
     ).show();
 
-    print("preferenceID: $preferenceID");
+    log("preferenceID: $preferenceID");
   }
 
   void payWithMercadoPagoWeb() async {
@@ -194,13 +196,16 @@ class HomePageController extends ControllerMVC implements IViewController {
       context: PageManager().navigatorKey.currentContext!,
       url: "https://sandboxpp.asjservicios.com.ar/",
       body:
-          "Hash=035a22333034bef0853987ec9a3534d3868f9ead708c8f8163e1d49db0c0784a&Comercio=a6c51c8e-cfa3-4c0c-ba5e-0c0af4cbd284&SucursalComercio=1n7ynISALVVGslLo02bRR%2FbydIi4I2eviaRGK5ScEoo%3D&TransaccionComercioId=transaction-dummy__2024-08-20_19-15-02&ClientData.NombreApellido=FirstName+LastName&CallbackSuccess=PEHHDZoZRoriRQQrBltJkGPYouzR6731iruU8grb%2BufonTd6fTrqadSEXWIOtFEi&CallbackCancel=HtvnDgrgtG6KLnKtQMfqJBd7xMKWsJlarCxV%2BbtqDA8tBBbGBSXH2ouSN78K92YU&Monto=xwLCKLCF7sVPbbzjNFElwmVwbUo8knV3XdHJSg%2B2t7c%3D&Informacion=kAVtRxDlsFGyOXnu7d%2FUv9w4GDM9invwCIfSQB41%2BEFSc%2F6dPCOiCGdoY4DwCJ%2B9&ClientData.CUIT=11123456784&Producto%5B0%5D=Garrafa+15kg&MontoProducto%5B0%5D=30000",
+          "Hash=035a22333034bef0853987ec9a3534d3868f9ead708c8f8163e1d49db0c0784a&Comercio=a6c51c8e-cfa3-4c0c-ba5e-0c0af4cbd284&SucursalComercio=aBethdMNgZ5Ev%2Bpcz58a6mI2e3wTIxg%2BipIf2faT3NQ%3D&TransaccionComercioId=transaction-dummy__2024-08-21_18-45-51&ClientData.NombreApellido=FirstName+LastName&CallbackSuccess=yGGyV1JW115EuIisAaRjdnqgbnlj0AMhZ8ziRkkwUJSnA%2FfAWVKCEGXKGJeBdYLN&CallbackCancel=Nv9P2KkfVjOmIa0KTzh4jlReBNEJnTqe1o11HVQ3hGykCl6LkSL4X9M%2FgxzCnstu&Monto=VP62MGbsHLO%2FtsXXiVFXLujoXGjqOnfAbgCYYZXsRD8%3D&Informacion=6q3Dmf747WS1U6y94UUz1MXetvdS8DDM3AnaRjPWkECcDHaT84PWZ5mYZaUEG2tu&ClientData.CUIT=11123456784&Producto%5B0%5D=Garrafa+15kg&MontoProducto%5B0%5D=30000",
     );
 
     _showResult(
       title: "Macro Click Web",
       paymentResultModel: paymentResultModel,
     );
+
+    log("link: ${paymentResultModel.link}");
+    log("download link: ${paymentResultModel.downloadLink}");
   }
 
   void payWithMacroClickWebPopup() async {
