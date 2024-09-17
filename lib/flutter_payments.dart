@@ -230,6 +230,7 @@ class FlutterPayments {
           builder: (context) => WebViewPage(
             paymentGatewaysEnum: PaymentGatewaysEnum.totalcoin,
             url: Uri.parse(
+              // "https://test.totalcoin.com/workspace/checkout/receptor?requestId=$preferenceId",
               "https://ar.totalcoin.com/workspace/checkout/receptor?requestId=$preferenceId",
             ),
             enablePhysicalBackButton: false,
