@@ -8,6 +8,7 @@ import 'package:flutter_payments/src/view/web_view_page.dart';
 import 'package:flutter_payments/src/view/web_view_popup.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'flutter_payments.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
 export 'src/models/mercado_pago/payment_result_model.dart';
 export 'src/components/common/loading_component.dart';
@@ -56,26 +57,55 @@ class FlutterPayments {
   }
 
   // MERCADO PAGO
+  static Future<void> payWithMercadoPagoAutomaticBrowser(
+    String url,
+  ) async {
+    try {
+      await launchUrl(
+        Uri.parse(url),
+        customTabsOptions: CustomTabsOptions(
+          shareState: CustomTabsShareState.on,
+          urlBarHidingEnabled: true,
+          showTitle: true,
+          closeButton: CustomTabsCloseButton(
+            icon: CustomTabsCloseButtonIcons.back,
+          ),
+        ),
+        safariVCOptions: const SafariViewControllerOptions(
+          barCollapsingEnabled: true,
+          dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+        ),
+      );
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
   static Future<PaymentResultModel> payWithMercadoPagoAutomatic({
     required BuildContext context,
     required String publicKey,
     required String preferenceId,
   }) async {
-    String? version = await platformVersion;
-    PaymentResultModel paymentResultModel;
-    if (version != null && version.toLowerCase().trim().contains("android")) {
-      paymentResultModel =
-          await _FlutterPaymentsChannel.payWithMercadoPagoCheckout(
-        publicKey: publicKey,
-        preferenceId: preferenceId,
-      );
-    } else {
-      // ignore: use_build_context_synchronously
-      paymentResultModel = await payWithMercadoPagoWeb(
-        context: context,
-        preferenceId: preferenceId,
-      );
-    }
+    // String? version = await platformVersion;
+    PaymentResultModel paymentResultModel = PaymentResultModel(
+      result: "ok"
+    );
+    // if (version != null && version.toLowerCase().trim().contains("android")) {
+    //   paymentResultModel =
+    //       await _FlutterPaymentsChannel.payWithMercadoPagoCheckout(
+    //     publicKey: publicKey,
+    //     preferenceId: preferenceId,
+    //   );
+    // } else {
+    //   // ignore: use_build_context_synchronously
+    //   paymentResultModel = await payWithMercadoPagoWeb(
+    //     context: context,
+    //     preferenceId: preferenceId,
+    //   );
+    // }
+    await payWithMercadoPagoAutomaticBrowser(
+      "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=$preferenceId",
+    );
 
     return paymentResultModel;
   }
@@ -191,6 +221,7 @@ class FlutterPayments {
     required double unitPrice,
     required String name,
     required String email,
+    List<String> backUrls = const [],
     String? externalReference,
   }) async {
     return await DataManager.createPreferenceIdMercadoPago(
@@ -202,6 +233,7 @@ class FlutterPayments {
       name: name,
       email: email,
       externalReference: externalReference,
+      backUrls: backUrls,
     );
   }
 
