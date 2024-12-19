@@ -87,9 +87,7 @@ class FlutterPayments {
     required String preferenceId,
   }) async {
     // String? version = await platformVersion;
-    PaymentResultModel paymentResultModel = PaymentResultModel(
-      result: "ok"
-    );
+    PaymentResultModel paymentResultModel = PaymentResultModel(result: "ok");
     // if (version != null && version.toLowerCase().trim().contains("android")) {
     //   paymentResultModel =
     //       await _FlutterPaymentsChannel.payWithMercadoPagoCheckout(
@@ -221,8 +219,10 @@ class FlutterPayments {
     required double unitPrice,
     required String name,
     required String email,
-    List<String> backUrls = const [],
     String? externalReference,
+    String? backUrlSuccess,
+    String? backUrlPending,
+    String? backUrlFailure,
   }) async {
     return await DataManager.createPreferenceIdMercadoPago(
       accessToken: accessToken,
@@ -233,7 +233,9 @@ class FlutterPayments {
       name: name,
       email: email,
       externalReference: externalReference,
-      backUrls: backUrls,
+      backUrlSuccess: backUrlSuccess,
+      backUrlPending: backUrlPending,
+      backUrlFailure: backUrlFailure,
     );
   }
 

@@ -117,7 +117,9 @@ class DataManager {
     required double unitPrice,
     required String name,
     required String email,
-    List<String> backUrls = const [],
+    String? backUrlSuccess,
+    String? backUrlPending,
+    String? backUrlFailure,
     String? externalReference,
   }) async {
     String body = json.encode(
@@ -148,9 +150,9 @@ class DataManager {
           ],
         },
         "back_urls": {
-          "success": backUrls[0],
-          "pending": backUrls[1],
-          "failure": backUrls[2],
+          "success": backUrlSuccess ?? "",
+          "pending": backUrlPending ?? "",
+          "failure": backUrlFailure ?? "",
         },
         "external_reference": externalReference,
         "metadata": {
