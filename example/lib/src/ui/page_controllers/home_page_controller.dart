@@ -72,48 +72,54 @@ class HomePageController extends ControllerMVC implements IViewController {
 
   void _showResult({
     required String title,
-    required PaymentResultModel paymentResultModel,
+    PaymentResultModel? paymentResultModel,
   }) async {
-    if (paymentResultModel.errorMessage != null) {
+    if (paymentResultModel?.errorMessage != null) {
       //log("Pago Error: ${paymentResult.errorMessage}");
       await PageManager().openDefaultAlertPopup(
         title: title,
-        description: "Pago error: ${paymentResultModel.errorMessage}",
+        description: "Pago error: ${paymentResultModel?.errorMessage}",
         labelAccept: "Ok",
       );
-    } else if (paymentResultModel.result.toLowerCase() == "canceled") {
+    } else if (paymentResultModel?.result.toLowerCase() == "canceled") {
       //log("Pago Cancelado");
       await PageManager().openDefaultAlertPopup(
         title: title,
         description: "Pago cancelado",
         labelAccept: "Ok",
       );
-    } else if (paymentResultModel.status == "rejected") {
+    } else if (paymentResultModel?.status == "rejected") {
       //log("Pago Rechazado");
       await PageManager().openDefaultAlertPopup(
         title: title,
         description: "Pago rechazado",
         labelAccept: "Ok",
       );
-    } else if (paymentResultModel.status == "approved") {
+    } else if (paymentResultModel?.status == "approved") {
       //log("Pago Aprobado");
       await PageManager().openDefaultAlertPopup(
         title: title,
         description: "Pago aprobado",
         labelAccept: "Ok",
       );
-    } else if (paymentResultModel.status == "in_process") {
+    } else if (paymentResultModel?.status == "in_process") {
       //log("Pago pendiente");
       await PageManager().openDefaultAlertPopup(
         title: title,
         description: "Pago pendiente",
         labelAccept: "Ok",
       );
+    } else {
+      // await PageManager().openDefaultAlertPopup(
+      //   title: "",
+      //   description: "",
+      //   labelAccept: "",
+      // );
     }
   }
 
   void payWithMercadoPagoAutomatic() async {
-    PaymentResultModel paymentResultModel =
+    PaymentResultModel? paymentResultModel =
         await FlutterPayments.payWithMercadoPagoAutomatic(
       context: PageManager().navigatorKey.currentContext!,
       publicKey: publicKeyTest,
