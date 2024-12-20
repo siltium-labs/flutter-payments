@@ -61,18 +61,16 @@ class FlutterPayments {
     String url,
   ) async {
     try {
-      await launchUrl(
-        Uri.parse(url),
-        customTabsOptions: CustomTabsOptions(
-          shareState: CustomTabsShareState.on,
-          urlBarHidingEnabled: true,
-          showTitle: true,
-          closeButton: CustomTabsCloseButton(
-            icon: CustomTabsCloseButtonIcons.back,
-          ),
+      await launch(
+        url,
+        customTabsOption: const CustomTabsOption(
+          enableDefaultShare: false,
+          enableUrlBarHiding: true,
+          showPageTitle: true,
         ),
-        safariVCOptions: const SafariViewControllerOptions(
+        safariVCOption: const SafariViewControllerOption(
           barCollapsingEnabled: true,
+          entersReaderIfAvailable: false,
           dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
         ),
       );
