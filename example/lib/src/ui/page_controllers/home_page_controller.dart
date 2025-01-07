@@ -29,9 +29,9 @@ class HomePageController extends ControllerMVC implements IViewController {
   // const publicKey = "YOUR KEY";
   // const preferenceId = "YOUR ID";
   // const accessTokenTest = "YOUR ACCESS TOKEN";
-  String publicKeyTest = "TEST-81d8a608-abf0-4d87-8575-edee2427d378";
+  String publicKeyTest = "TEST-66ed404b-ae56-47de-99ae-76a5e53599a9";
   String accessTokenTest =
-      "TEST-1563356252471753-080709-33fb458ed3d3fc24b9d54032f0e045fd-222344382";
+      "TEST-5075726861374018-110711-eb070b284902e84bbbee3f040abb897a-315664271";
   String? preferenceIDcreated;
 
   @override
@@ -41,8 +41,8 @@ class HomePageController extends ControllerMVC implements IViewController {
       accessToken: accessTokenTest,
       title: "Producto Test",
       quantity: 1,
-      unitPrice: 3500.52,
-      name: "Jorge Test",
+      unitPrice: 3000.99,
+      name: "John Doe",
       email: "jmamani@siltium.com",
     );
   }
@@ -154,7 +154,7 @@ class HomePageController extends ControllerMVC implements IViewController {
         title: "Producto Siltium",
         quantity: 2,
         unitPrice: 5000.99,
-        name: "Jorge",
+        name: "John Doe",
         email: "jmamani@siltium.com",
         externalReference: "12345678",
       ),
