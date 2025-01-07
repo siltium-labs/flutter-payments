@@ -8,7 +8,8 @@ import 'package:flutter_payments/src/view/web_view_page.dart';
 import 'package:flutter_payments/src/view/web_view_popup.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'flutter_payments.dart';
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+// import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 export 'src/models/mercado_pago/payment_result_model.dart';
 export 'src/components/common/loading_component.dart';
@@ -61,19 +62,29 @@ class FlutterPayments {
     String url,
   ) async {
     try {
-      await launch(
-        url,
-        customTabsOption: const CustomTabsOption(
-          enableDefaultShare: false,
-          enableUrlBarHiding: true,
-          showPageTitle: true,
-        ),
-        safariVCOption: const SafariViewControllerOption(
-          barCollapsingEnabled: true,
-          entersReaderIfAvailable: false,
-          dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
-        ),
-      );
+      // await launch(
+      //   url,
+      //   customTabsOption: const CustomTabsOption(
+      //     enableDefaultShare: false,
+      //     enableUrlBarHiding: true,
+      //     showPageTitle: true,
+      //   ),
+      //   safariVCOption: const SafariViewControllerOption(
+      //     barCollapsingEnabled: true,
+      //     entersReaderIfAvailable: false,
+      //     dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+      //   ),
+      // );
+      try {
+        final Uri urlUri = Uri.parse(url);
+        if (await canLaunchUrl(urlUri)) {
+          await launchUrl(urlUri, mode: LaunchMode.externalApplication);
+        } else {
+          // _showErrorDialog(context, 'No se pudo lanzar la URL: $urlString');
+        }
+      } catch (e) {
+        debugPrint(e.toString());
+      }
     } catch (e) {
       debugPrint(e.toString());
     }
