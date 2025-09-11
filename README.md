@@ -26,6 +26,12 @@ Plugin para incluir en proyectos mobile de Siltium, permite realizar pagos usand
 <br>
 <br>
 
+**v0.3.3**
+<br>
+- Actualizacion de la version de flutter a 3.32.7 (example y package)
+<br>
+<br>
+
 ## **Instalación de la Librería (Android y iOS)**
 EN FLUTTER:
 
