@@ -16,7 +16,6 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.ActivityResultListener
-import io.flutter.plugin.common.PluginRegistry.Registrar
 
 /** FlutterPaymentsPlugin */
 class FlutterPaymentsPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, ActivityResultListener {
