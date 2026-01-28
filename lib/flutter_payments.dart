@@ -27,20 +27,20 @@ class _FlutterPaymentsChannel {
   }
 
   // MERCADO PAGO
-  static Future<PaymentResultModel> payWithMercadoPagoCheckout({
-    required String publicKey,
-    required String preferenceId,
-  }) async {
-    Map<String, dynamic>? result =
-        await (_channel.invokeMapMethod<String, dynamic>(
-      'startCheckoutWithMercadoPago',
-      {
-        "publicKey": publicKey,
-        "preferenceId": preferenceId,
-      },
-    ));
-    return PaymentResultModel.fromJson(result!);
-  }
+  // static Future<PaymentResultModel> payWithMercadoPagoCheckout({
+  //   required String publicKey,
+  //   required String preferenceId,
+  // }) async {
+  //   Map<String, dynamic>? result =
+  //       await (_channel.invokeMapMethod<String, dynamic>(
+  //     'startCheckoutWithMercadoPago',
+  //     {
+  //       "publicKey": publicKey,
+  //       "preferenceId": preferenceId,
+  //     },
+  //   ));
+  //   return PaymentResultModel.fromJson(result!);
+  // }
 }
 // End Plugin class (with Method Channel)---------------------------------------
 
@@ -95,24 +95,24 @@ class FlutterPayments {
     required String publicKey,
     required String preferenceId,
   }) async {
-    String? version = await platformVersion;
+    // String? version = await platformVersion;
     PaymentResultModel? paymentResultModel;
-    if (version != null && version.toLowerCase().trim().contains("android")) {
-      paymentResultModel =
-          await _FlutterPaymentsChannel.payWithMercadoPagoCheckout(
-        publicKey: publicKey,
-        preferenceId: preferenceId,
-      );
-    } else {
-      // ignore: use_build_context_synchronously
-      // paymentResultModel = await payWithMercadoPagoWeb(
-      //   context: context,
-      //   preferenceId: preferenceId,
-      // );
-      await payWithMercadoPagoAutomaticBrowser(
-        "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=$preferenceId",
-      );
-    }
+    // if (version != null && version.toLowerCase().trim().contains("android")) {
+    //   paymentResultModel =
+    //       await _FlutterPaymentsChannel.payWithMercadoPagoCheckout(
+    //     publicKey: publicKey,
+    //     preferenceId: preferenceId,
+    //   );
+    // } else {
+    // ignore: use_build_context_synchronously
+    paymentResultModel = await payWithMercadoPagoWeb(
+      context: context,
+      preferenceId: preferenceId,
+    );
+    await payWithMercadoPagoAutomaticBrowser(
+      "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=$preferenceId",
+    );
+    // }
     return paymentResultModel;
   }
 

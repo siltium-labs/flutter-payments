@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_payments/flutter_payments.dart';
 import 'package:flutter_payments_example/values/k_colors.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -54,11 +53,11 @@ class HomePageController extends ControllerMVC implements IViewController {
   Future<void> initPlatformState() async {
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
-    try {
-      platformVersion = await FlutterPayments.platformVersion;
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
+    // try {
+    //   platformVersion = await FlutterPayments.platformVersion;
+    // } on PlatformException {
+    //   platformVersion = 'Failed to get platform version.';
+    // }
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
